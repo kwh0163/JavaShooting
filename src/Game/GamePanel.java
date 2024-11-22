@@ -10,17 +10,16 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 public class GamePanel extends JPanel implements IBehavior{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	private static final boolean DEBUG_MODE = false;
 	
-	private String titleString = "Strike";
-	private int width = 800;
-	private int height = 600;
-	private int defaultPixel = 48;
+	private ArrayList<GameObject> objects = new ArrayList<GameObject>();
 	
-	
-	private static ArrayList<GameObject> objects = new ArrayList<GameObject>();
-	
-	public static void AddObject(GameObject _object) {
+	public void AddObject(GameObject _object) {
 		for(int i = 0;i<objects.size();i++) {
 			if(_object.sprite.sortIndex <= objects.get(i).sprite.sortIndex) {
 				objects.add(i, _object);
@@ -28,6 +27,9 @@ public class GamePanel extends JPanel implements IBehavior{
 			}
 		}
 		objects.add(_object);
+	}
+	public void RemoveObject(GameObject _object) {
+		objects.remove(_object);
 	}
 	
 	public GamePanel(KeyActionHandler key) {
@@ -44,16 +46,24 @@ public class GamePanel extends JPanel implements IBehavior{
         
         for(int i = 0;i<objects.size();i++)
         	DrawObject(graphics2d, objects.get(i));
+        	
     }
     
     public void CreateFrame() {
-        JFrame frame = new JFrame(titleString);
+        JFrame frame = new JFrame(MainProgram.title);
         
-        frame.setSize(width, height);
+        frame.setSize(MainProgram.width, MainProgram.height);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.add(this);
+        frame.pack();
         frame.setVisible(true);
     }
+    
+    @Override
+    public Dimension getPreferredSize() {
+        return new Dimension(MainProgram.width, MainProgram.height); // 원하는 패널 크기 반환
+    }
+    
 	@Override
 	public void Update() {
 		repaint();
@@ -66,6 +76,7 @@ public class GamePanel extends JPanel implements IBehavior{
 	
 	private void DrawObject(Graphics2D graphics, GameObject _object) {
 		if (_object == null || _object.transform == null) return; // null 체크
+		if (!_object.isActive) return;
 
 	    if (DEBUG_MODE) {
 	        System.out.println(String.format("Draw %s in %.2f, %.2f", 
@@ -73,14 +84,19 @@ public class GamePanel extends JPanel implements IBehavior{
 	    }
 	    
 	    Vector2 position = _object.transform.GetPosition();
-	    position.y = height - position.y;
+	    position = GetPivotPosition(_object);
+	    position.y = MainProgram.height - position.y;
+
+	    double angleInRadians = Math.toRadians(-_object.transform.rotation);
+	    
+	    graphics.rotate(angleInRadians, position.x, position.y);
 
 	    // 사각형 정보
-	    Rectangle2D rect = new Rectangle2D.Float(
+	    Rectangle2D rect = new Rectangle2D.Double(
 	    	position.x,
 	    	position.y,
-	        defaultPixel * _object.transform.scale.x,
-	        defaultPixel * _object.transform.scale.y
+	        MainProgram.defaultPixel * _object.transform.scale.x,
+	        MainProgram.defaultPixel * _object.transform.scale.y
 	    );
 
 	    BufferedImage image = _object.sprite != null ? _object.sprite.image : null;
@@ -90,14 +106,28 @@ public class GamePanel extends JPanel implements IBehavior{
 	        graphics.drawImage(image, 
 	            (int) position.x, 
 	            (int) position.y,
-	            (int) (defaultPixel * _object.transform.scale.x), 
-	            (int) (defaultPixel * _object.transform.scale.y), 
+	            (int) (MainProgram.defaultPixel * _object.transform.scale.x), 
+	            (int) (MainProgram.defaultPixel * _object.transform.scale.y), 
 	            null
 	        );
 	    } else {
 	        // 기본 색상
-	        graphics.setColor(Color.RED);
+	        graphics.setColor(_object.sprite.color);
 	        graphics.fill(rect);
 	    }
+	    
+	    graphics.rotate(-angleInRadians, position.x, position.y);
+	}
+	
+	private Vector2 GetPivotPosition(GameObject _object) {
+		Vector2 pivotPosition = new Vector2(_object.transform.GetPosition());
+		pivotPosition.x -= (MainProgram.defaultPixel * _object.transform.scale.x * _object.transform.pivot.x);
+		pivotPosition.y += (MainProgram.defaultPixel * _object.transform.scale.y * _object.transform.pivot.y);
+		
+		return pivotPosition;
+	}
+	@Override
+	public boolean GetIsActive() {
+		return true;
 	}
 }

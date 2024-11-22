@@ -1,24 +1,31 @@
 package Object.Player;
 
 import java.io.File;
+
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-import Object.GameObject;
-import Util.Vector2;
+import Object.*;
+import Util.*;
 
 public class Player extends GameObject {
 	PlayerInput input;
 	PlayerMovement movement;
+	PlayerAttack attack;
 	
 	public Player(Vector2 _position) {
 		super(_position);
 		name = "Player";
+		layer = Layer.Player;
+		tag = Tag.Player;
 		input = new PlayerInput(this);
 		movement = new PlayerMovement(this);
+		attack = new PlayerAttack(this);
+		collider = new BoxCollider(this);
+		collider.checkLayers.clear();
 		
-		sprite.sortIndex = 1;
+		sprite.sortIndex = 5;
 		try {
 			sprite.image = ImageIO.read(new File("Image\\Plane.png"));
 			
@@ -28,5 +35,10 @@ public class Player extends GameObject {
 		}
 	}
 	
+	@Override
+	public void Update() {
+		super.Update();
+		attack.Attack();
+	}
 	
 }

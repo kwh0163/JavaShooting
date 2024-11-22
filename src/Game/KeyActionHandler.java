@@ -23,31 +23,40 @@ public class KeyActionHandler {
         _inputMap.put(KeyStroke.getKeyStroke("DOWN"), "moveDown");
         _inputMap.put(KeyStroke.getKeyStroke("LEFT"), "moveLeft");
         _inputMap.put(KeyStroke.getKeyStroke("RIGHT"), "moveRight");
+        _inputMap.put(KeyStroke.getKeyStroke("Z"), "attack");
 
         // 키 뗐을 때
         _inputMap.put(KeyStroke.getKeyStroke("released UP"), "releaseUp");
         _inputMap.put(KeyStroke.getKeyStroke("released DOWN"), "releaseDown");
         _inputMap.put(KeyStroke.getKeyStroke("released LEFT"), "releaseLeft");
         _inputMap.put(KeyStroke.getKeyStroke("released RIGHT"), "releaseRight");
+        _inputMap.put(KeyStroke.getKeyStroke("released Z"), "releaseAttack");
 
         // 키 입력 처리
-        _actionMap.put("moveUp", new KeyAction("UP", true));
-        _actionMap.put("moveDown", new KeyAction("DOWN", true));
-        _actionMap.put("moveLeft", new KeyAction("LEFT", true));
-        _actionMap.put("moveRight", new KeyAction("RIGHT", true));
+        _actionMap.put("moveUp", new MoveAction("UP", true));
+        _actionMap.put("moveDown", new MoveAction("DOWN", true));
+        _actionMap.put("moveLeft", new MoveAction("LEFT", true));
+        _actionMap.put("moveRight", new MoveAction("RIGHT", true));
+        _actionMap.put("attack", new AttackAction(true));
 
         // 키 해제 처리
-        _actionMap.put("releaseUp", new KeyAction("UP", false));
-        _actionMap.put("releaseDown", new KeyAction("DOWN", false));
-        _actionMap.put("releaseLeft", new KeyAction("LEFT", false));
-        _actionMap.put("releaseRight", new KeyAction("RIGHT", false));
+        _actionMap.put("releaseUp", new MoveAction("UP", false));
+        _actionMap.put("releaseDown", new MoveAction("DOWN", false));
+        _actionMap.put("releaseLeft", new MoveAction("LEFT", false));
+        _actionMap.put("releaseRight", new MoveAction("RIGHT", false));
+        _actionMap.put("releaseAttack", new AttackAction(false));
     }
 
-    private class KeyAction extends AbstractAction {
-        private final String key;
+    private class MoveAction extends AbstractAction {
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+		
+		private final String key;
         private final boolean isPressed;
 
-        public KeyAction(String key, boolean isPressed) {
+        public MoveAction(String key, boolean isPressed) {
             this.key = key;
             this.isPressed = isPressed;
         }
@@ -64,6 +73,17 @@ public class KeyActionHandler {
             Vector2 combinedDirection = calculateDirection();
             PlayerInput.instance.Move(combinedDirection); // 이동 처리
         }
+    }
+    private class AttackAction extends AbstractAction{
+    	private final boolean isPressed;
+    	public AttackAction(boolean _isPressed) {
+    		isPressed = _isPressed;
+    	}
+    	
+    	@Override
+    	public void actionPerformed(ActionEvent e) {
+    		PlayerInput.instance.Attack(isPressed);
+    	}
     }
 
     // 눌린 키를 기반으로 방향 계산

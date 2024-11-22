@@ -1,6 +1,7 @@
 package Object.Player;
 
 import Util.*;
+import Object.CustomObject.*;
 
 public class PlayerInput{
 	public static PlayerInput instance;
@@ -16,5 +17,9 @@ public class PlayerInput{
 	
 	public void Move(Vector2 direction) {
 		origin.movement.Move(direction);
+	}
+	
+	public void Attack(boolean _isAttacking) {
+		origin.attack.isAttacking = _isAttacking;
 	}
 }

@@ -1,8 +1,6 @@
 package Util;
 import java.util.ArrayList;
 
-import Util.IBehavior;
-
 public class Time {
 	
 	private static int FPS = 60;
@@ -32,14 +30,20 @@ public class Time {
 				deltaTime = (float)((process1 - a) / 1000.0000);
 				a = process1;
 				
-				for(int i = 0;i<behaviors.size();i++)
-					behaviors.get(i).Update();
+				for(int i = 0;i<behaviors.size();i++) {
+					IBehavior current = behaviors.get(i);
+					if(current.GetIsActive())
+						current.Update();
+				}
 			}
 			
 			if(process2 - b >= 1000 * fixedDeltaTime) {
 				b = process2;
-				for(int i = 0;i<behaviors.size();i++)
-					behaviors.get(i).FixedUpdate();
+				for(int i = 0;i<behaviors.size();i++) {
+					IBehavior current = behaviors.get(i);
+					if(current.GetIsActive())
+						current.FixedUpdate();
+				}
 			}
 		}
 	}

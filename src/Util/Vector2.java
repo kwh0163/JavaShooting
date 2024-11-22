@@ -2,10 +2,10 @@ package Util;
 
 
 public class Vector2 {
-	public float x;
-	public float y;
+	public double x;
+	public double y;
 	
-	public Vector2(float _x, float _y) {
+	public Vector2(double _x, double _y) {
 		x = _x;
 		y = _y;
 	}
@@ -16,8 +16,8 @@ public class Vector2 {
 	 public float GetMagnitude() {
         return (float) Math.sqrt(x * x + y * y);
 	}
-
-	    // 벡터 정규화
+	 
+	 	    // 벡터 정규화
     public Vector2 GetNormalized() {
         float magnitude = GetMagnitude();
         if (magnitude == 0) {
@@ -26,6 +26,36 @@ public class Vector2 {
         return new Vector2(x / magnitude, y / magnitude);
 	    }
 	
+    public Vector2 Add(Vector2 other) {
+    	return new Vector2(x + other.x, y + other.y);
+    }
+    public Vector2 Sub(Vector2 other) {
+    	return new Vector2(x - other.x, y - other.y);
+    }
+    public Vector2 Mul(double val) {
+    	if(val == 0)
+    		return Vector2.Zero();
+    	return new Vector2(x * val, y * val);
+    }
+    
+    public Vector2 rotate(double angleInRadians) {
+    	
+    	double radian = Math.toRadians(angleInRadians);
+    	
+        double cos =  Math.cos(radian);
+        double sin = Math.sin(radian);
+        
+        double newX = x * cos - y * sin;
+        double newY = x * sin + y * cos;
+        
+        return new Vector2(newX, newY);
+    }
+    
+    @Override
+    public String toString() {
+        return String.format("Vector2(x=%.2f, y=%.2f)", x, y);
+    }
+    
 	public static Vector2 Zero() {
 		return new Vector2(0,0);
 	}
@@ -50,7 +80,7 @@ public class Vector2 {
 	public static Vector2 Sub(Vector2 a, Vector2 b) {
 		return new Vector2(a.x - b.x, a.y - b.y );
 	}
-	public static Vector2 Mult(Vector2 a, float b) {
+	public static Vector2 Mult(Vector2 a, double b) {
 		return new Vector2(a.x*b, a.y*b);
 	}
 
