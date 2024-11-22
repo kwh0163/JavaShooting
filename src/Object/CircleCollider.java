@@ -4,7 +4,7 @@ import Game.MainProgram;
 import Util.Vector2;
 
 public class CircleCollider extends Collider {
-    public double radius; // 원의 반지름
+    public double radius;
 
     public CircleCollider(GameObject _object) {
         super(_object);
@@ -22,7 +22,6 @@ public class CircleCollider extends Collider {
     }
 
     private boolean CheckCollisionWithBox(BoxCollider box) {
-        // BoxCollider가 CircleCollider와의 충돌을 처리하도록 위임
         return box.CheckCollisionWithCircle(this);
     }
 
@@ -32,11 +31,9 @@ public class CircleCollider extends Collider {
 
         double combinedRadius = (this.radius + other.radius) * MainProgram.defaultPixel;
 
-        // 두 원의 중심 간 거리 계산
         double distanceX = centerA.x - centerB.x;
         double distanceY = centerA.y - centerB.y;
 
-        // 충돌 여부 반환
         return (distanceX * distanceX + distanceY * distanceY) < (combinedRadius * combinedRadius);
     }
 }
