@@ -1,0 +1,12 @@
+diff a/src/Object/GameObject.java b/src/Object/GameObject.java	(rejected hunks)
+@@ -45,6 +45,10 @@
+ 		
+ 	}
+ 
++	@Override
++	public void Start() {
++		MainProgram.panel.AddObject(this);
++	}
+ 	@Override
+ 	public void Update() {
+ 		rigidBody.Update();

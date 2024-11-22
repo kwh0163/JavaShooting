@@ -15,18 +15,19 @@ public class TestObject extends GameObject{
 		layer = Layer.Enemy;
 		collider = new BoxCollider(this);
 		collider.checkLayers.clear();
-		collider.checkLayers.add(Layer.Player);
+		collider.checkLayers.add(Layer.PlayerHitBox);
+		AddPanel();
 	}
 	
 	@Override
 	public void OnCollisionEnter(GameObject _collision) {
-		if(_collision.CompareTag(Tag.Player))
+		if(_collision.CompareTag(Tag.PlayerHitBox))
 			sprite.color = Color.BLUE;
 	}
 	
 	@Override
 	public void OnCollisionExit(GameObject _collision) {
-		if(_collision.CompareTag(Tag.Player))
+		if(_collision.CompareTag(Tag.PlayerHitBox))
 			sprite.color = Color.RED;
 	}
 

@@ -14,6 +14,7 @@ public class PlayerAmmo extends GameObject{
 		layer = Layer.PlayerAmmo;
 		collider.checkLayers.clear();
 		collider.checkLayers.add(Layer.Enemy);
+		AddPanel();
 	}
 
 	@Override

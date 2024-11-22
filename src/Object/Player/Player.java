@@ -13,6 +13,7 @@ public class Player extends GameObject {
 	PlayerInput input;
 	PlayerMovement movement;
 	PlayerAttack attack;
+	PlayerHitBox hitBox;
 	
 	public Player(Vector2 _position) {
 		super(_position);
@@ -24,6 +25,8 @@ public class Player extends GameObject {
 		attack = new PlayerAttack(this);
 		collider = new BoxCollider(this);
 		collider.checkLayers.clear();
+		hitBox = new PlayerHitBox(_position);
+		transform.childTransform = hitBox.transform;
 		
 		sprite.sortIndex = 5;
 		try {
@@ -33,6 +36,8 @@ public class Player extends GameObject {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		AddPanel();
 	}
 	
 	@Override

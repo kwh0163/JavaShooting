@@ -10,13 +10,16 @@ public class Transform {
 	public Vector2 scale = Vector2.One();
 	public float rotation = 0;
 	
+	public Transform childTransform = null;
+	
 	public Transform(GameObject _origin) {
 		gameObject = _origin;
 	}
 	
 	public void SetPosition(Vector2 _position) {
 		position = new Vector2(_position);
-		
+		if(childTransform != null)
+			childTransform.SetPosition(_position);
 		if(gameObject.rigidBody != null)
 			gameObject.rigidBody.SyncPosition(new Vector2(_position));
 	}

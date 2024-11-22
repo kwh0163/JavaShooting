@@ -8,6 +8,8 @@ import Util.Time;
 import Util.Vector2;
 
 public class GameObject implements IBehavior {
+	private boolean panelAdded = false;
+	
 	public String name = "";
 	public Transform transform;
 	public Sprite sprite;
@@ -34,7 +36,11 @@ public class GameObject implements IBehavior {
 		transform.SetPosition(_position);
 		sprite = new Sprite(null);
 		rigidBody = new RigidBody(transform);
+	}
+	
+	public void AddPanel() {
 		MainProgram.panel.AddObject(this);
+		panelAdded = true;
 	}
 	
 	public void OnCollisionEnter(GameObject collisionObject) {
@@ -47,6 +53,8 @@ public class GameObject implements IBehavior {
 
 	@Override
 	public void Update() {
+		if(!panelAdded)
+			System.out.println(name + " not added in panel");
 		rigidBody.Update();
 	}
 
