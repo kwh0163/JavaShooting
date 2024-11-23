@@ -3,7 +3,7 @@ package Game;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import Object.Collider;
+import MonoBehavior.Collider;
 import Util.Layer;
 
 public class ColliderManager {

@@ -9,7 +9,7 @@ import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
-public class GamePanel extends JPanel implements IBehavior{
+public class GamePanel extends JPanel{
 	/**
 	 * 
 	 */
@@ -29,14 +29,15 @@ public class GamePanel extends JPanel implements IBehavior{
 		objects.add(_object);
 	}
 	public void RemoveObject(GameObject _object) {
+		int index = objects.indexOf(_object);
+		GameObject temp = objects.get(index);
 		objects.remove(_object);
+		temp = null;
 	}
 	
 	public GamePanel(KeyActionHandler key) {
 		key.Initialize(this);
         setFocusable(true);
-        
-        Time.behaviors.add(this);
 	}
 	@Override
     protected void paintComponent(Graphics g) {
@@ -49,8 +50,13 @@ public class GamePanel extends JPanel implements IBehavior{
         	
     }
     
-    public void CreateFrame() {
-        JFrame frame = new JFrame(MainProgram.title);
+    @Override
+    public Dimension getPreferredSize() {
+        return new Dimension(MainProgram.width, MainProgram.height); // 원하는 패널 크기 반환
+    }
+    
+    public void Start() {
+    	JFrame frame = new JFrame(MainProgram.title);
         
         frame.setSize(MainProgram.width, MainProgram.height);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -59,24 +65,14 @@ public class GamePanel extends JPanel implements IBehavior{
         frame.setVisible(true);
     }
     
-    @Override
-    public Dimension getPreferredSize() {
-        return new Dimension(MainProgram.width, MainProgram.height); // 원하는 패널 크기 반환
-    }
-    
-	@Override
 	public void Update() {
 		repaint();
-	}
-	@Override
-	public void FixedUpdate() {
-		// TODO Auto-generated method stub
-		
 	}
 	
 	private void DrawObject(Graphics2D graphics, GameObject _object) {
 		if (_object == null || _object.transform == null) return; // null 체크
 		if (!_object.isActive) return;
+		if(!_object.sprite.isVisible) return;
 
 	    if (DEBUG_MODE) {
 	        System.out.println(String.format("Draw %s in %.2f, %.2f", 
@@ -125,9 +121,5 @@ public class GamePanel extends JPanel implements IBehavior{
 		pivotPosition.y += (MainProgram.defaultPixel * _object.transform.scale.y * _object.transform.pivot.y);
 		
 		return pivotPosition;
-	}
-	@Override
-	public boolean GetIsActive() {
-		return true;
 	}
 }

@@ -11,18 +11,18 @@ public class MainProgram {
 	
 	public static GamePanel panel;
 	public static ColliderManager colliderManager;
+	public static GameObjectManager gameObjectManager;
 	
 	public static void main(String args[]) {
-		KeyActionHandler keyAction = new KeyActionHandler();
+		panel = new GamePanel(new KeyActionHandler());
 		
-		panel = new GamePanel(keyAction);
-		panel.CreateFrame();
-		
+		gameObjectManager = new GameObjectManager();
 		colliderManager = new ColliderManager();
+		
 		
 		new GameManager();
 		
-		Time.StartProgram();
+		Time.StartProgram(gameObjectManager, panel);
 	}
 	
 	public static boolean IsOveredWorld(Vector2 _position) {

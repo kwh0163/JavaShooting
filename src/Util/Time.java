@@ -1,7 +1,9 @@
 package Util;
-import java.util.ArrayList;
+
+import Game.*;
 
 public class Time {
+	private static boolean DEBUG_FPS;
 	
 	private static int FPS = 60;
 	private static float deltaTime = 0;
@@ -14,36 +16,40 @@ public class Time {
 		return fixedDeltaTime;
 	}
 	
-	public static ArrayList<IBehavior> behaviors = new ArrayList<IBehavior>();
-	
-	public static void StartProgram() {
+	public static void StartProgram(GameObjectManager _objectManager, GamePanel _panel) {
+		_panel.Start();
+		
 		long a = System.currentTimeMillis();
 		long b = System.currentTimeMillis();
 		long process1 = a;
 		long process2 = a;
+		
 		
 		while(true) {
 			process1 = System.currentTimeMillis();
 			process2 = System.currentTimeMillis();
 			
 			if(process1 - a >= (1000.0 / FPS)){
+				if(DEBUG_FPS)
+					System.out.println(1000.0 / (process1 - a));
 				deltaTime = (float)((process1 - a) / 1000.0000);
 				a = process1;
 				
-				for(int i = 0;i<behaviors.size();i++) {
-					IBehavior current = behaviors.get(i);
-					if(current.GetIsActive())
-						current.Update();
-				}
+				_objectManager.Awake();
+				
+				_objectManager.Start();
+				
+				_objectManager.Update();
+
+				_objectManager.LateUpdate();
+				
+				_panel.Update();
 			}
 			
 			if(process2 - b >= 1000 * fixedDeltaTime) {
 				b = process2;
-				for(int i = 0;i<behaviors.size();i++) {
-					IBehavior current = behaviors.get(i);
-					if(current.GetIsActive())
-						current.FixedUpdate();
-				}
+				
+				_objectManager.FixedUpdate();
 			}
 		}
 	}

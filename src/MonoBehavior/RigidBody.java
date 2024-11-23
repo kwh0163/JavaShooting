@@ -1,26 +1,36 @@
-package Object;
+package MonoBehavior;
 
+import Object.GameObject;
+import Object.Transform;
 import Util.*;
 
-public class RigidBody {
+public class RigidBody extends MonoBehavior{
+	public RigidBody(GameObject _object) {
+		super(_object);
+	}
+
 	private static final boolean DEBUG_MODE = false;
 	public Vector2 velocity = Vector2.Zero();
 	
 	public Vector2 position;
+	public Vector2 GetPosition() {
+		return new Vector2(position);
+	}
 	
-	private Transform transform;
-	
-	public RigidBody(Transform _transform) {
+	@Override
+	public void Awake() {
 		if(DEBUG_MODE)
-			System.out.println(String.format("%s position : %.2f, %.2f", _transform.gameObject.name, _transform.GetPosition().x, _transform.GetPosition().y));
-		transform = _transform;
+			System.out.println(gameObject.name + " position : " + transform.GetPosition().toString());
+		transform.rigidBody = this;
 		position = transform.GetPosition();
 	}
 
+	@Override
 	public void Update() {
 		transform.SetPosition(position);
 	}
 
+	@Override
 	public void FixedUpdate() {
 		position = position.Add(velocity.Mul(Time.FixedDeltaTime()));
 	}

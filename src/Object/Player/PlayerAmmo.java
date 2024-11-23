@@ -1,30 +1,32 @@
 package Object.Player;
 
+import Object.AmmoObject;
 import Object.GameObject;
-import Util.Layer;
-import Util.Tag;
-import Util.Vector2;
+import Util.*;
 
-public class PlayerAmmo extends GameObject{
+public class PlayerAmmo extends AmmoObject{
+	
+	public int poolIndex;
+	
 	public PlayerAmmo(Vector2 _position) {
 		super(_position);
+		
+		layer = Layer.PlayerAmmo;
 	}
 	
-	protected void Init() {
-		layer = Layer.PlayerAmmo;
+	@Override
+	public void Awake() {
+		super.Awake();
+
 		collider.checkLayers.clear();
 		collider.checkLayers.add(Layer.Enemy);
-		AddPanel();
 	}
-
-	@Override
-	public void Destroy() {
-		isActive = false;
-	}
+	
 	@Override
 	public void OnCollisionEnter(GameObject _collision) {
 		if(_collision.CompareTag(Tag.Enemy)) {
 			Destroy();
+			PlayerAttack.instance.ReturnAmmo(this);
 		}
 	}
 }

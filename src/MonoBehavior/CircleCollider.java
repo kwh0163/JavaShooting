@@ -1,14 +1,20 @@
-package Object;
+package MonoBehavior;
 
 import Game.MainProgram;
+import Object.GameObject;
 import Util.Vector2;
 
 public class CircleCollider extends Collider {
     public double radius;
 
-    public CircleCollider(GameObject _object) {
-        super(_object);
-        radius = _object.transform.scale.x;
+    public CircleCollider(GameObject _object, RigidBody _rigid) {
+        super(_object, _rigid);
+    }
+    
+    @Override
+    public void Awake() {
+    	super.Awake();
+        radius = transform.scale.x;
     }
 
     @Override
@@ -20,14 +26,14 @@ public class CircleCollider extends Collider {
         }
         return false;
     }
-
+    
     private boolean CheckCollisionWithBox(BoxCollider box) {
         return box.CheckCollisionWithCircle(this);
     }
 
     private boolean CheckCollisionWithCircle(CircleCollider other) {
-        Vector2 centerA = gameObject.transform.GetPosition();
-        Vector2 centerB = other.gameObject.transform.GetPosition();
+        Vector2 centerA = rigidBody.GetPosition();
+        Vector2 centerB = other.rigidBody.GetPosition();
 
         double combinedRadius = (this.radius + other.radius) * MainProgram.defaultPixel;
 

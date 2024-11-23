@@ -1,15 +1,21 @@
-package Object;
+package MonoBehavior;
 
 import Game.MainProgram;
+import Object.GameObject;
 import Util.Vector2;
 
 public class BoxCollider extends Collider {
 	
 	public Vector2 colliderSize;
 	
-	public BoxCollider(GameObject gameObject) {
-		super(gameObject);
-		colliderSize = gameObject.transform.GetScale();
+	public BoxCollider(GameObject gameObject, RigidBody _rigid) {
+		super(gameObject, _rigid);
+	}
+	
+	@Override
+	public void Awake() {
+		super.Awake();
+		colliderSize = transform.GetScale();
 	}
 
 	@Override
@@ -23,8 +29,8 @@ public class BoxCollider extends Collider {
     }
 
     public boolean CheckCollisionWithBox(BoxCollider other) {
-        Vector2 posA = GetBoxPivotPosition(gameObject.transform.GetPosition(), this);
-        Vector2 posB = GetBoxPivotPosition(other.gameObject.transform.GetPosition(), other);
+        Vector2 posA = GetBoxPivotPosition(rigidBody.GetPosition(), this);
+        Vector2 posB = GetBoxPivotPosition(other.rigidBody.GetPosition(), other);
 
         Vector2 sizeA = colliderSize.Mul(MainProgram.defaultPixel);
         Vector2 sizeB = other.colliderSize.Mul(MainProgram.defaultPixel);
@@ -37,10 +43,10 @@ public class BoxCollider extends Collider {
     }
 
     public boolean CheckCollisionWithCircle(CircleCollider circle) {
-        Vector2 boxPos = GetBoxPivotPosition(gameObject.transform.GetPosition(), this);
+        Vector2 boxPos = GetBoxPivotPosition(rigidBody.GetPosition(), this);
         Vector2 boxSize = colliderSize.Mul(MainProgram.defaultPixel);
 
-        Vector2 circleCenter = circle.gameObject.transform.GetPosition();
+        Vector2 circleCenter = circle.rigidBody.GetPosition();
         double circleRadius = circle.radius * MainProgram.defaultPixel;
 
         // 원의 중심을 사각형의 영역으로 제한

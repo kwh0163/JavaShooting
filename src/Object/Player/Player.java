@@ -6,6 +6,9 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import MonoBehavior.BoxCollider;
+import MonoBehavior.Collider;
+import MonoBehavior.RigidBody;
 import Object.*;
 import Util.*;
 
@@ -14,21 +17,19 @@ public class Player extends GameObject {
 	PlayerMovement movement;
 	PlayerAttack attack;
 	PlayerHitBox hitBox;
+
+	Collider collider;
+	RigidBody rigidBody;
 	
 	public Player(Vector2 _position) {
 		super(_position);
+		
 		name = "Player";
 		layer = Layer.Player;
 		tag = Tag.Player;
-		input = new PlayerInput(this);
-		movement = new PlayerMovement(this);
-		attack = new PlayerAttack(this);
-		collider = new BoxCollider(this);
-		collider.checkLayers.clear();
-		hitBox = new PlayerHitBox(_position);
-		transform.childTransform = hitBox.transform;
 		
 		sprite.sortIndex = 5;
+		
 		try {
 			sprite.image = ImageIO.read(new File("Image\\Plane.png"));
 			
@@ -37,12 +38,22 @@ public class Player extends GameObject {
 			e.printStackTrace();
 		}
 		
-		AddPanel();
+		input = new PlayerInput(this);
+		movement = new PlayerMovement(this);
+		attack = new PlayerAttack(this);
+		
+		rigidBody = new RigidBody(this);
+		
+		collider = new BoxCollider(this, rigidBody);
+		collider.checkLayers.clear();
+		
+		hitBox = new PlayerHitBox(transform.GetPosition());
+		transform.childTransform = hitBox.transform;
 	}
-	
 	@Override
 	public void Update() {
 		super.Update();
+		attack.FindTarget();
 		attack.Attack();
 	}
 	

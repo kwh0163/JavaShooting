@@ -1,5 +1,6 @@
 package Object;
 
+import MonoBehavior.RigidBody;
 import Util.Vector2;
 
 public class Transform {
@@ -9,6 +10,8 @@ public class Transform {
 	public GameObject gameObject;
 	public Vector2 scale = Vector2.One();
 	public float rotation = 0;
+	
+	public RigidBody rigidBody = null;
 	
 	public Transform childTransform = null;
 	
@@ -20,8 +23,8 @@ public class Transform {
 		position = new Vector2(_position);
 		if(childTransform != null)
 			childTransform.SetPosition(_position);
-		if(gameObject.rigidBody != null)
-			gameObject.rigidBody.SyncPosition(new Vector2(_position));
+		if(rigidBody != null)
+			rigidBody.SyncPosition(new Vector2(_position));
 	}
 	public Vector2 GetPosition() {
 		return new Vector2(position);

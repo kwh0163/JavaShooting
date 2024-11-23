@@ -1,29 +1,29 @@
-package Object;
+package MonoBehavior;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import Game.MainProgram;
-import Util.IBehavior;
-import Util.Layer;
-import Util.Time;
-import Util.Vector2;
+import Object.GameObject;
+import Util.*;
 
-public abstract class Collider{
+public abstract class Collider extends MonoBehavior{
 	
-	public GameObject gameObject;
+	public Collider(GameObject _object, RigidBody _rigid) {
+		super(_object);
+		rigidBody = _rigid;
+		collisionObjects = new HashMap<Collider, Boolean>();
+		checkLayers.add(Layer.Default);
+		colliderPivot = gameObject.transform.pivot;
+		MainProgram.colliderManager.AddCollider(this);
+	}
+
 	public ArrayList<Layer> checkLayers = new ArrayList<Layer>();
 	public HashMap<Collider, Boolean> collisionObjects;
 	
 	public Vector2 colliderPivot;
 	
-	public Collider(GameObject _object) {
-		collisionObjects = new HashMap<Collider, Boolean>();
-		checkLayers.add(Layer.Default);
-		gameObject = _object;
-		colliderPivot = gameObject.transform.pivot;
-		MainProgram.colliderManager.AddCollider(this);
-	}
+	public RigidBody rigidBody;
 	
 	private void OnCollisionEnter(GameObject collisionObject) {
 		gameObject.OnCollisionEnter(collisionObject);
@@ -34,7 +34,25 @@ public abstract class Collider{
 	
 	protected abstract boolean CheckCollision(Collider _collider);
 	
+	@Override
+	public void Start() {
+		CheckCollision();
+	}
+	
+	@Override
 	public void FixedUpdate() {
+		CheckCollision();
+	}
+	@Override
+	public void OnDestroy() {
+		MainProgram.colliderManager.RemoveCollider(this);
+		rigidBody = null;
+		checkLayers = null;
+		collisionObjects = null;
+		super.OnDestroy();
+	}
+	
+	private void CheckCollision(){
 		for(int i = 0;i<checkLayers.size();i++) {
 			ArrayList<Collider> colliders = MainProgram.colliderManager.GetColliderList(checkLayers.get(i));
 			if(colliders == null) {
@@ -62,5 +80,4 @@ public abstract class Collider{
 			}
 		}
 	}
-	
 }

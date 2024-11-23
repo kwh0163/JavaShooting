@@ -6,22 +6,26 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-import Object.CircleCollider;
+import MonoBehavior.CircleCollider;
+import MonoBehavior.Collider;
+import MonoBehavior.RigidBody;
 import Object.GameObject;
 import Util.*;
 
 public class PlayerHitBox extends GameObject{
+	
+	RigidBody rigidBody;
+	Collider collider;
 
 	public PlayerHitBox(Vector2 _position) {
 		super(_position);
+
 		name = "PlayerHitBox";
 		layer = Layer.PlayerHitBox;
 		tag = Tag.PlayerHitBox;
 		transform.scale = new Vector2(0.3, 0.3);
-		collider = new CircleCollider(this);
-		collider.checkLayers.clear();
-		((CircleCollider)collider).radius *= 0.9;
 		sprite.sortIndex = 6;
+		
 		try {
 			sprite.image = ImageIO.read(new File("Image\\Hit.png"));
 			
@@ -29,8 +33,12 @@ public class PlayerHitBox extends GameObject{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
 		sprite.color = Color.RED;
-	    
-		AddPanel();
+		
+		rigidBody = new RigidBody(this);
+		collider = new CircleCollider(this, rigidBody);
+		collider.checkLayers.clear();
+		((CircleCollider)collider).radius *= 0.9;
 	}
 }

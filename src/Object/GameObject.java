@@ -1,48 +1,45 @@
 package Object;
 
-import Game.MainProgram;
-import Util.IBehavior;
-import Util.Layer;
-import Util.Tag;
-import Util.Time;
-import Util.Vector2;
+import java.util.ArrayList;
 
-public class GameObject implements IBehavior {
-	private boolean panelAdded = false;
+import Game.MainProgram;
+import MonoBehavior.MonoBehavior;
+import Util.*;
+
+public class GameObject {
+	private static boolean DEBUG_MODE = false;
 	
-	public String name = "";
+	public boolean panelAdded = false;
+	
+	public String name = "GameObject";
 	public Transform transform;
 	public Sprite sprite;
-	public RigidBody rigidBody;
-	public Collider collider;
-	
 	public Layer layer;
 	public Tag tag;
 	public boolean CompareTag(Tag _tag) {
 		return tag == _tag;
 	}
 	public boolean isActive = true;
-	@Override
-	public boolean GetIsActive() {
-		return isActive;
+	
+	public ArrayList<MonoBehavior> behaviors;
+	public void AddBehavior(MonoBehavior _behavior) {
+		behaviors.add(_behavior);
 	}
 	
 	public GameObject(Vector2 _position) {
-		Time.behaviors.add(this);
+		if(DEBUG_MODE)
+			System.out.println(name + " is Instantiated");
+		
+		behaviors = new ArrayList<MonoBehavior>();
+		
 		layer = Layer.Default;
 		tag = Tag.Default;
-		
 		transform = new Transform(this);
 		transform.SetPosition(_position);
 		sprite = new Sprite(null);
-		rigidBody = new RigidBody(transform);
+		
+		MainProgram.gameObjectManager.AddGameObject(this);
 	}
-	
-	public void AddPanel() {
-		MainProgram.panel.AddObject(this);
-		panelAdded = true;
-	}
-	
 	public void OnCollisionEnter(GameObject collisionObject) {
 		
 	}
@@ -50,26 +47,72 @@ public class GameObject implements IBehavior {
 	public void OnCollisionExit(GameObject collisisonObject) {
 		
 	}
+	
+	public void Awake() {
+		panelAdded = true;
+		MainProgram.panel.AddObject(this);
+		
+		for(int i = 0;i<behaviors.size();i++) {
+			behaviors.get(i).Awake();
+			if(DEBUG_MODE)
+				System.out.println(behaviors.get(i).getClass().toString() + " of " + name + " Awaked");
+		}
+	}
+	public void Start() {
+		
+		for(int i = 0;i<behaviors.size();i++) {
+			behaviors.get(i).Start();
+			if(DEBUG_MODE)
+				System.out.println(behaviors.get(i).getClass().toString() + " of " + name + " Started");
+		}
+	}
 
-	@Override
 	public void Update() {
 		if(!panelAdded)
 			System.out.println(name + " not added in panel");
-		rigidBody.Update();
+		
+		for(int i = 0;i<behaviors.size();i++) {
+			behaviors.get(i).Update();
+			if(DEBUG_MODE)
+				System.out.println(behaviors.get(i).getClass().toString() + " of " + name + " Updated");
+		}
 	}
 
-	@Override
 	public void FixedUpdate() {
-		rigidBody.FixedUpdate();
-		collider.FixedUpdate();
-		
+		for(int i = 0;i<behaviors.size();i++) {
+			behaviors.get(i).FixedUpdate();
+			if(DEBUG_MODE)
+				System.out.println(behaviors.get(i).getClass().toString() + " of " + name + " FixedUpdated");
+		}
+	}
+	public void LateUpdate() {
+		for(int i = 0;i<behaviors.size();i++) {
+			behaviors.get(i).LateUpdate();
+			if(DEBUG_MODE)
+				System.out.println(behaviors.get(i).getClass().toString() + " of " + name + " LateUpdated");
+		}
 	}
 	
-	public void Destroy() {
-		System.out.println(name + " Destoryed");
-		Time.behaviors.remove(this);
-		MainProgram.colliderManager.RemoveCollider(collider);
+	public void OnDestroy() 
+	{
+		isActive = false;
 		MainProgram.panel.RemoveObject(this);
+		
+		for(int i = 0;i<behaviors.size();i++) {
+			MonoBehavior temp = behaviors.get(i);
+			temp.OnDestroy();
+			temp = null;
+			if(DEBUG_MODE)
+				System.out.println(behaviors.get(i).getClass().toString() + " of " + name + " Destroyed");
+		}
+		transform = null;
+		sprite = null;
+		behaviors = null;
+		MainProgram.gameObjectManager.DestroyObject(this);
+	}
+	
+	public static void Destroy(GameObject _gameObject) {
+		_gameObject.OnDestroy();
 	}
 
 }

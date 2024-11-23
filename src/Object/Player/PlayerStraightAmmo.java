@@ -6,15 +6,18 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-import Object.BoxCollider;
+import MonoBehavior.BoxCollider;
 import Util.Vector2;
 
 public class PlayerStraightAmmo extends PlayerAmmo{
 	double speed = 1000;
 	
-	
-	public PlayerStraightAmmo(Vector2 _position, float _degree) {
+	public PlayerStraightAmmo(Vector2 _position) {
 		super(_position);
+		
+		transform.scale = new Vector2(0.15, 0.4);
+		collider = new BoxCollider(this, rigidBody);
+
 		name = "StraightAmmo";
 		sprite.sortIndex = 0;
 		try {
@@ -26,11 +29,6 @@ public class PlayerStraightAmmo extends PlayerAmmo{
 		}
 		
 		sprite.color = Color.YELLOW;
-		
-		transform.scale = new Vector2(0.15, 0.4);
-		collider = new BoxCollider(this);
-		Reset(_position, _degree);
-		Init();
 	}
 	
 	public void Reset(Vector2 _position, float _degree) {
