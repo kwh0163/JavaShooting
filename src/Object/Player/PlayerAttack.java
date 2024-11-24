@@ -1,7 +1,5 @@
 package Object.Player;
 
-import java.util.ArrayList;
-
 import Game.EnemyManager;
 import Object.Enemy.Enemy;
 import Util.Pool;
@@ -10,8 +8,6 @@ import Util.Vector2;
 
 public class PlayerAttack {
 	public static PlayerAttack instance;
-	
-	private static boolean DEBUG_MODE = false;
 	
 	private Player origin;
 	public int level = 5;
@@ -151,18 +147,15 @@ public class PlayerAttack {
 			CreateGuideAmmo(origin.transform.GetPosition(), Vector2.Up().rotate(-10));
 			break;
 		case 4:
-			CreateGuideAmmo(origin.transform.GetPosition(), Vector2.Up().rotate(5));
-			CreateGuideAmmo(origin.transform.GetPosition(), Vector2.Up().rotate(15));
-			CreateGuideAmmo(origin.transform.GetPosition(), Vector2.Up().rotate(-5));
-			CreateGuideAmmo(origin.transform.GetPosition(), Vector2.Up().rotate(-15));
+			CreateGuideAmmo(origin.transform.GetPosition(), Vector2.Up());
+			CreateGuideAmmo(origin.transform.GetPosition(), Vector2.Up().rotate(20));
+			CreateGuideAmmo(origin.transform.GetPosition(), Vector2.Up().rotate(-20));
 			break;
 		case 5:
-			CreateGuideAmmo(origin.transform.GetPosition(), Vector2.Up().rotate(5));
-			CreateGuideAmmo(origin.transform.GetPosition(), Vector2.Up().rotate(15));
-			CreateGuideAmmo(origin.transform.GetPosition(), Vector2.Up().rotate(25));
-			CreateGuideAmmo(origin.transform.GetPosition(), Vector2.Up().rotate(-5));
-			CreateGuideAmmo(origin.transform.GetPosition(), Vector2.Up().rotate(-15));
-			CreateGuideAmmo(origin.transform.GetPosition(), Vector2.Up().rotate(-25));
+			CreateGuideAmmo(origin.transform.GetPosition(), Vector2.Up().rotate(10));
+			CreateGuideAmmo(origin.transform.GetPosition(), Vector2.Up().rotate(30));
+			CreateGuideAmmo(origin.transform.GetPosition(), Vector2.Up().rotate(-10));
+			CreateGuideAmmo(origin.transform.GetPosition(), Vector2.Up().rotate(-30));
 			break;
 		default:
 			CreateGuideAmmo(origin.transform.GetPosition(), Vector2.Up());
