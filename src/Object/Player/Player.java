@@ -29,7 +29,7 @@ public class Player extends GameObject {
 		layer = Layer.Player;
 		tag = Tag.Player;
 		
-		sprite.sortIndex = 5;
+		sprite.sortIndex = 3;
 		
 		try {
 			sprite.image = ImageIO.read(new File("Image\\Plane.png"));
@@ -46,9 +46,9 @@ public class Player extends GameObject {
 		
 		rigidBody = new RigidBody(this);
 		
-		collider = new BoxCollider(this, rigidBody);
-		collider.checkLayers.clear();
-		collider.checkLayers.add(Layer.Enemy);
+		//collider = new BoxCollider(this, rigidBody);
+		//collider.checkLayers.clear();
+		//collider.checkLayers.add(Layer.Enemy);
 		
 		hitBox = new PlayerHitBox(transform.GetPosition(), this);
 		transform.childTransform = hitBox.transform;
@@ -60,7 +60,7 @@ public class Player extends GameObject {
 	@Override
 	public void OnCollisionEnter(GameObject collisionObject) {
 		if(collisionObject.CompareTag(Tag.Enemy)) {
-			health.Damage();
+			//health.Damage();
 		}
 	}
 	

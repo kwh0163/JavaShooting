@@ -43,7 +43,16 @@ public class PlayerHitBox extends GameObject{
 		rigidBody = new RigidBody(this);
 		collider = new CircleCollider(this, rigidBody);
 		collider.checkLayers.clear();
-		((CircleCollider)collider).radius *= 0.9;
+		collider.checkLayers.add(Layer.Enemy);
+		((CircleCollider)collider).radius = 0.2;
+	}
+	
+	@Override
+	public void OnCollisionEnter(GameObject _collision) {
+		super.OnCollisionEnter(_collision);
+		if(_collision.CompareTag(Tag.Enemy)) {
+			Damage();
+		}
 	}
 	
 	public void Damage() {

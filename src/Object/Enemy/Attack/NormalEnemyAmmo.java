@@ -28,6 +28,7 @@ public class NormalEnemyAmmo extends EnemyAmmo {
 		}
 		
 		collider = new CircleCollider(this, rigidBody);
+		((CircleCollider)collider).radius = 0.2;
 	}
 
 	

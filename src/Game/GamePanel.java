@@ -1,6 +1,5 @@
 package Game;
 import javax.swing.*;
-
 import Object.*;
 import Util.*;
 
@@ -51,8 +50,6 @@ public class GamePanel extends JPanel{
         
         for(int i = 0;i<objects.size();i++)
         	DrawObject(graphics2d, objects.get(i));
-        
-        graphics2d.setComposite(originalComposite);
         	
     }
     
@@ -78,6 +75,7 @@ public class GamePanel extends JPanel{
 	private void DrawObject(Graphics2D graphics, GameObject _object) {
 		if (_object == null || _object.transform == null) return; // null 체크
 		if (!_object.isActive) return;
+		
 		if(!_object.sprite.isVisible) return;
 
 	    if (DEBUG_MODE) {
@@ -125,6 +123,8 @@ public class GamePanel extends JPanel{
 	    }
 	    
 	    graphics.rotate(-angleInRadians, position.x, position.y);
+        
+        graphics.setComposite(originalComposite);
 	}
 	
 	private Vector2 GetPivotPosition(GameObject _object) {

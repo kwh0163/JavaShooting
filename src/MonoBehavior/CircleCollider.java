@@ -35,11 +35,19 @@ public class CircleCollider extends Collider {
         Vector2 centerA = rigidBody.GetPosition();
         Vector2 centerB = other.rigidBody.GetPosition();
 
-        double combinedRadius = (this.radius + other.radius) * MainProgram.defaultPixel;
+        double combinedRadius = (this.radius + other.radius) * MainProgram.defaultPixel * 0.5;
 
+        
         double distanceX = centerA.x - centerB.x;
         double distanceY = centerA.y - centerB.y;
-
-        return (distanceX * distanceX + distanceY * distanceY) < (combinedRadius * combinedRadius);
+        
+        boolean isCollision = (distanceX * distanceX + distanceY * distanceY) < (combinedRadius * combinedRadius);
+        	
+        if(isCollision) {
+        	System.out.println(String.format("distance : %f", Vector2.Distance(centerA, centerB)));
+        	System.out.println(String.format("a radius : %f, b radius : %f, combined Radius : %f, defaultPixel : %d", this.radius, other.radius, combinedRadius, MainProgram.defaultPixel));
+        }
+        		
+        return isCollision;
     }
 }

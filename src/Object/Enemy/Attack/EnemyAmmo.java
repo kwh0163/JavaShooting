@@ -1,6 +1,5 @@
 package Object.Enemy.Attack;
 
-import Util.*;
 import Game.GameManager;
 import Object.AmmoObject;
 import Object.GameObject;
@@ -13,7 +12,7 @@ public class EnemyAmmo extends AmmoObject{
 	
 	public int poolIndex;
 	
-	protected float speed = 20;
+	protected float speed = 500;
 	
 	public EnemyAmmo(Vector2 _position) {
 		super(_position);

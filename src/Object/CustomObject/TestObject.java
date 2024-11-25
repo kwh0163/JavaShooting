@@ -52,7 +52,7 @@ public class TestObject extends Enemy{
 	public void Update() {
 		super.Update();
 		
-		if(counter < 3) {
+		if(counter < 0.2) {
 			counter += Time.DeltaTime();
 		}
 		else {

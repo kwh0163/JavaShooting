@@ -11,7 +11,7 @@ public class PlayerAttack extends MonoBehavior {
 	public static PlayerAttack instance;
 	
 	private Player origin;
-	public int level = 5;
+	public int level = 2;
 	public boolean isAttacking = false;
 	
 	private Pool<PlayerStraightAmmo> straightPool;
