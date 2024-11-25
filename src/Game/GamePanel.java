@@ -19,6 +19,8 @@ public class GamePanel extends JPanel{
 	
 	private ArrayList<GameObject> objects = new ArrayList<GameObject>();
 	
+	private Composite originalComposite;
+	
 	public void AddObject(GameObject _object) {
 		for(int i = 0;i<objects.size();i++) {
 			if(_object.sprite.sortIndex <= objects.get(i).sprite.sortIndex) {
@@ -44,9 +46,13 @@ public class GamePanel extends JPanel{
         super.paintComponent(g);
         
         Graphics2D graphics2d = (Graphics2D)g;
+        if(originalComposite == null)
+        	originalComposite = graphics2d.getComposite();
         
         for(int i = 0;i<objects.size();i++)
         	DrawObject(graphics2d, objects.get(i));
+        
+        graphics2d.setComposite(originalComposite);
         	
     }
     
@@ -79,6 +85,8 @@ public class GamePanel extends JPanel{
 	            _object.name, _object.transform.GetPosition().x, _object.transform.GetPosition().y));
 	    }
 	    
+	    if(_object.sprite.alpha == 0) return;
+	    
 	    Vector2 position = _object.transform.GetPosition();
 	    position = GetPivotPosition(_object);
 	    position.y = MainProgram.height - position.y;
@@ -96,6 +104,10 @@ public class GamePanel extends JPanel{
 	    );
 
 	    BufferedImage image = _object.sprite != null ? _object.sprite.image : null;
+	    
+	    if(_object.sprite.alpha < 0.95) {
+	    	graphics.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, Math.clamp(_object.sprite.alpha, 0, 1)));
+	    }
 
 	    if (image != null) {
 	        // 이미지 그리기

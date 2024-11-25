@@ -17,6 +17,7 @@ public class Player extends GameObject {
 	PlayerMovement movement;
 	PlayerAttack attack;
 	PlayerHitBox hitBox;
+	PlayerHealth health;
 
 	Collider collider;
 	RigidBody rigidBody;
@@ -41,20 +42,31 @@ public class Player extends GameObject {
 		input = new PlayerInput(this);
 		movement = new PlayerMovement(this);
 		attack = new PlayerAttack(this);
+		health = new PlayerHealth(this, 5);
 		
 		rigidBody = new RigidBody(this);
 		
 		collider = new BoxCollider(this, rigidBody);
 		collider.checkLayers.clear();
+		collider.checkLayers.add(Layer.Enemy);
 		
-		hitBox = new PlayerHitBox(transform.GetPosition());
+		hitBox = new PlayerHitBox(transform.GetPosition(), this);
 		transform.childTransform = hitBox.transform;
 	}
 	@Override
 	public void Update() {
 		super.Update();
-		attack.FindTarget();
-		attack.Attack();
 	}
+	@Override
+	public void OnCollisionEnter(GameObject collisionObject) {
+		if(collisionObject.CompareTag(Tag.Enemy)) {
+			health.Damage();
+		}
+	}
+	
+	public void Damage() {
+		health.Damage();
+	}
+	
 	
 }

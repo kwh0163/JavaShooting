@@ -69,7 +69,7 @@ public class PlayerGuidanceAmmo extends PlayerAmmo{
 	}
 	
 	private Vector2 GetGuideVelocity() {
-		if(origin.targetEnemy == null)
+		if(origin.targetEnemy == null || !origin.targetEnemy.isActive)
 			return rigidBody.velocity.GetNormalized();
 		Vector2 direction = origin.targetEnemy.transform.GetPosition().Sub(transform.GetPosition());
 		return direction.GetNormalized();

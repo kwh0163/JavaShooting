@@ -1,21 +1,25 @@
 package Object.Enemy;
 
-import Game.EnemyManager;
+import Game.GameManager;
 import Object.GameObject;
 import Util.Vector2;
 
 public class Enemy extends GameObject{
-
-	public Enemy(Vector2 _position) {
+	private EnemyHealth health;
+	
+	public Enemy(Vector2 _position, int _hp) {
 		super(_position);
-		EnemyManager.instance.AddEnemy(this);
+		health = new EnemyHealth(this, _hp);
+		GameManager.instance.Enemy.AddEnemy(this);
 	}
 	
 	@Override
 	public void OnDestroy() {
 		super.OnDestroy();
-		
-		EnemyManager.instance.RemoveEnemy(this);
+		GameManager.instance.Enemy.RemoveEnemy(this);
 	}
-
+	
+	public void Damage(int _damage) {
+		health.Damage(_damage);
+	}
 }

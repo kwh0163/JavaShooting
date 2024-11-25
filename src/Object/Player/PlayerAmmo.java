@@ -2,11 +2,14 @@ package Object.Player;
 
 import Object.AmmoObject;
 import Object.GameObject;
+import Object.Enemy.Enemy;
 import Util.*;
 
 public class PlayerAmmo extends AmmoObject{
 	
 	public int poolIndex;
+	
+	public int damage = 1;
 	
 	public PlayerAmmo(Vector2 _position) {
 		super(_position);
@@ -27,6 +30,7 @@ public class PlayerAmmo extends AmmoObject{
 		if(_collision.CompareTag(Tag.Enemy)) {
 			Destroy();
 			PlayerAttack.instance.ReturnAmmo(this);
+			((Enemy)_collision).Damage(damage);
 		}
 	}
 }

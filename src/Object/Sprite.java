@@ -8,6 +8,7 @@ public class Sprite {
 	
 	public boolean isVisible;
 	public int sortIndex = 0;
+	public float alpha = 1;
 	
 	public Sprite(BufferedImage _image) {
 		image = _image;

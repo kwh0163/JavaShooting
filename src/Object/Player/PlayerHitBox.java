@@ -14,12 +14,16 @@ import Util.*;
 
 public class PlayerHitBox extends GameObject{
 	
+	private Player origin;
+	
 	RigidBody rigidBody;
 	Collider collider;
 
-	public PlayerHitBox(Vector2 _position) {
+	public PlayerHitBox(Vector2 _position, Player _origin) {
 		super(_position);
 
+		origin = _origin;
+		
 		name = "PlayerHitBox";
 		layer = Layer.PlayerHitBox;
 		tag = Tag.PlayerHitBox;
@@ -40,5 +44,9 @@ public class PlayerHitBox extends GameObject{
 		collider = new CircleCollider(this, rigidBody);
 		collider.checkLayers.clear();
 		((CircleCollider)collider).radius *= 0.9;
+	}
+	
+	public void Damage() {
+		origin.Damage();
 	}
 }

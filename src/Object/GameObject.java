@@ -26,6 +26,16 @@ public class GameObject {
 		behaviors.add(_behavior);
 	}
 	
+	public <T extends MonoBehavior> T GetCompoenent(Class<T> type) {
+		for(MonoBehavior behavior : behaviors) {
+			if(type.isInstance(behavior)) {
+				return type.cast(behavior);
+			}
+		}
+		return null;
+	}
+
+	
 	public GameObject(Vector2 _position) {
 		if(DEBUG_MODE)
 			System.out.println(name + " is Instantiated");
@@ -114,5 +124,4 @@ public class GameObject {
 	public static void Destroy(GameObject _gameObject) {
 		_gameObject.OnDestroy();
 	}
-
 }

@@ -4,20 +4,26 @@ import java.util.ArrayList;
 
 import Object.GameObject;
 import Object.Enemy.*;
+import Object.Enemy.Attack.EnemyAmmo;
+import Object.Enemy.Attack.NormalEnemyAmmo;
+import Object.Player.PlayerAmmo;
+import Object.Player.PlayerGuidanceAmmo;
+import Object.Player.PlayerStraightAmmo;
 import Util.*;
 
 public class EnemyManager extends GameObject{
-	public static EnemyManager instance;
 	public ArrayList<Enemy> enemyList;
+	
+	public Pool<NormalEnemyAmmo> normalAmmoPool;
 	
 	private double timeCounter = 0;
 	
 	public EnemyManager() {
 		super(Vector2.Zero());
 		
-		instance = this;
-		
 		sprite.isVisible = false;
+		
+		normalAmmoPool = new Pool<NormalEnemyAmmo>();
 		
 		enemyList = new ArrayList<Enemy>();
 	}
@@ -33,5 +39,27 @@ public class EnemyManager extends GameObject{
 	}
 	public void RemoveEnemy(Enemy _enemy) {
 		enemyList.remove(_enemy);
+	}
+	
+	public NormalEnemyAmmo GetNormalAmmo(Vector2 _position, Vector2 _firstDirection) {
+		
+		NormalEnemyAmmo ammo;
+		if(normalAmmoPool.IsEmpty()) {
+			ammo = new NormalEnemyAmmo(_position);
+			ammo.poolIndex = normalAmmoPool.AddPool(ammo);
+		}
+		else {
+			ammo = normalAmmoPool.GetPool();
+			if(ammo.isActive)
+				System.out.println("Ammo Is Already Active");
+		}
+		ammo.Reset(_position, _firstDirection);
+		
+		return ammo;
+	}
+	public void ReturnAmmo(EnemyAmmo _ammo) {
+		if (_ammo instanceof NormalEnemyAmmo) {
+			normalAmmoPool.ReturnPool(_ammo.poolIndex);
+		}
 	}
 }

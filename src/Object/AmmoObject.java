@@ -18,6 +18,4 @@ public class AmmoObject extends GameObject{
 	public void Destroy() {
 		isActive = false;
 	}
-	
-	
 }

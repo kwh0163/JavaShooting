@@ -7,6 +7,8 @@ import MonoBehavior.Collider;
 import MonoBehavior.RigidBody;
 import Object.GameObject;
 import Object.Enemy.Enemy;
+import Object.Enemy.Attack.IEnemyAttack;
+import Object.Enemy.Attack.PlayerTargettingAttack;
 import Util.*;
 
 public class TestObject extends Enemy{
@@ -14,8 +16,10 @@ public class TestObject extends Enemy{
 	Collider collider;
 	RigidBody rigidBody;
 	
+	IEnemyAttack attack;
+	
 	public TestObject(Vector2 _position) {
-		super(_position);
+		super(_position, 100);
 
 		name = "Test Object";
 		tag = Tag.Enemy;
@@ -26,6 +30,8 @@ public class TestObject extends Enemy{
 		collider = new BoxCollider(this, rigidBody);
 		collider.checkLayers.clear();
 		collider.checkLayers.add(Layer.PlayerHitBox);
+		
+		attack = new PlayerTargettingAttack(this);
 	}
 	
 	@Override
@@ -40,4 +46,22 @@ public class TestObject extends Enemy{
 			sprite.color = Color.RED;
 	}
 
+	
+	private float counter = 0;
+	@Override
+	public void Update() {
+		super.Update();
+		
+		if(counter < 3) {
+			counter += Time.DeltaTime();
+		}
+		else {
+			counter = 0;
+			attack.Attack();
+			System.out.println("Attack");
+		}
+		
+		
+	}
+	
 }

@@ -1,12 +1,13 @@
 package Object.Player;
 
-import Game.EnemyManager;
+import Game.GameManager;
+import MonoBehavior.MonoBehavior;
 import Object.Enemy.Enemy;
 import Util.Pool;
 import Util.Time;
 import Util.Vector2;
 
-public class PlayerAttack {
+public class PlayerAttack extends MonoBehavior {
 	public static PlayerAttack instance;
 	
 	private Player origin;
@@ -26,8 +27,10 @@ public class PlayerAttack {
 	public void FindTarget() {
 		if(targetEnemy == null || !targetEnemy.isActive) {
 			double distance = -1;
-			for(int i = 0;i<EnemyManager.instance.enemyList.size();i++) {
-				Enemy currentEnemy = EnemyManager.instance.enemyList.get(i);
+			for(int i = 0;i<GameManager.instance.Enemy.enemyList.size();i++) {
+				Enemy currentEnemy = GameManager.instance.Enemy.enemyList.get(i);
+				if(!currentEnemy.isActive)
+					continue;
 				double enemyDistance = Vector2.Distance(origin.transform.GetPosition(), currentEnemy.transform.GetPosition());
 				if(distance < 0) {
 					targetEnemy = currentEnemy;
@@ -39,15 +42,21 @@ public class PlayerAttack {
 					distance = enemyDistance;
 				}
 			}
-			
 		}
 	}
 	
 	public PlayerAttack(Player _player) {
+		super(_player);
 		instance = this;
 		straightPool = new Pool<PlayerStraightAmmo>();
 		guidancePool = new Pool<PlayerGuidanceAmmo>();
 		origin = _player;
+	}
+	@Override
+	public void Update() {
+		super.Update();
+		FindTarget();
+		Attack();
 	}
 	
 	public void Attack() {
