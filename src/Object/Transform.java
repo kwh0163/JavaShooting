@@ -32,4 +32,17 @@ public class Transform {
 	public Vector2 GetScale() {
 		return new Vector2(scale);
 	}
+	public void Look(Vector2 _target) {
+		double dotProduct = _target.y;
+		double magnitudeTarget = Math.sqrt(_target.x * _target.x + _target.y * _target.y);
+		double rotate = Math.acos(dotProduct / (magnitudeTarget));
+		
+		if(_target.x >= 0)
+			rotate = -rotate;
+		
+		float degree = (float)Math.toDegrees(rotate);
+		
+		
+		rotation = degree;
+	}
 }

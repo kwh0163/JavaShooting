@@ -7,6 +7,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 import Game.MainProgram;
+import MonoBehavior.BoxCollider;
 import MonoBehavior.CircleCollider;
 import Util.Time;
 import Util.Vector2;
@@ -24,28 +25,22 @@ public class PlayerGuidanceAmmo extends PlayerAmmo{
 		
 		origin = _origin;
 		
-		transform.scale = new Vector2(0.3, 0.3);
-		collider = new CircleCollider(this, rigidBody);
-		((CircleCollider)collider).radius = 0.2;
+		transform.scale = new Vector2(0.2, 0.5);
+		collider = new BoxCollider(this, rigidBody);
 
 		name = "GuidanceAmmo";
 		
 		sprite.sortIndex = 1;
-		try {
-			sprite.image = ImageIO.read(new File("Image\\Bullet.png"));
-			
-		} catch (IOException e) {
-
-			e.printStackTrace();
-		}
+		sprite.image = GetBufferedImage("Missile.png");
 		
 		sprite.color = Color.BLUE;
 	}
 	
-	public void Reset(Vector2 _position, Vector2 _firstDirection) {
+	public void Reset(Vector2 _position, float _degree) {
 		guideTimeCounter = 0;
 		transform.SetPosition(_position);
-		rigidBody.velocity = _firstDirection.GetNormalized().Mul(speed);
+		rigidBody.velocity = Vector2.Up().rotate(_degree).Mul(speed);
+		transform.rotation = _degree;
 		isActive = true;
 	}
 	
@@ -69,9 +64,12 @@ public class PlayerGuidanceAmmo extends PlayerAmmo{
 	}
 	
 	private Vector2 GetGuideVelocity() {
+		Vector2 direction;
 		if(origin.targetEnemy == null || !origin.targetEnemy.isActive)
-			return rigidBody.velocity.GetNormalized();
-		Vector2 direction = origin.targetEnemy.transform.GetPosition().Sub(transform.GetPosition());
+			direction = rigidBody.velocity.GetNormalized();
+		else
+			direction = origin.targetEnemy.transform.GetPosition().Sub(transform.GetPosition());
+		transform.Look(direction);
 		return direction.GetNormalized();
 	}
 	

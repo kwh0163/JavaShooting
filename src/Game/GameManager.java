@@ -13,6 +13,7 @@ public class GameManager {
 	
 	public GameManager() {
 		instance = this;
+		new BackGroundManager(Vector2.Zero());
 		
 		Enemy = new EnemyManager();
 		

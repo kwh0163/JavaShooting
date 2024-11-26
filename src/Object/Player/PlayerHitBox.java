@@ -30,13 +30,7 @@ public class PlayerHitBox extends GameObject{
 		transform.scale = new Vector2(0.3, 0.3);
 		sprite.sortIndex = 6;
 		
-		try {
-			sprite.image = ImageIO.read(new File("Image\\Hit.png"));
-			
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		sprite.image = GetBufferedImage("Hit.png");
 		
 		sprite.color = Color.RED;
 		
@@ -51,11 +45,11 @@ public class PlayerHitBox extends GameObject{
 	public void OnCollisionEnter(GameObject _collision) {
 		super.OnCollisionEnter(_collision);
 		if(_collision.CompareTag(Tag.Enemy)) {
-			Damage();
+			TryDamage();
 		}
 	}
 	
-	public void Damage() {
-		origin.Damage();
+	public boolean TryDamage() {
+		return origin.TryDamage();
 	}
 }

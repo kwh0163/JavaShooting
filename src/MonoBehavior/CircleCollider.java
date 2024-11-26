@@ -5,6 +5,7 @@ import Object.GameObject;
 import Util.Vector2;
 
 public class CircleCollider extends Collider {
+	private static final boolean DEBUG_MODE = false;
     public double radius;
 
     public CircleCollider(GameObject _object, RigidBody _rigid) {
@@ -43,9 +44,11 @@ public class CircleCollider extends Collider {
         
         boolean isCollision = (distanceX * distanceX + distanceY * distanceY) < (combinedRadius * combinedRadius);
         	
-        if(isCollision) {
+        if(DEBUG_MODE) {
+        	if(isCollision) {
         	System.out.println(String.format("distance : %f", Vector2.Distance(centerA, centerB)));
         	System.out.println(String.format("a radius : %f, b radius : %f, combined Radius : %f, defaultPixel : %d", this.radius, other.radius, combinedRadius, MainProgram.defaultPixel));
+        	}
         }
         		
         return isCollision;

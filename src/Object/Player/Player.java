@@ -31,13 +31,7 @@ public class Player extends GameObject {
 		
 		sprite.sortIndex = 3;
 		
-		try {
-			sprite.image = ImageIO.read(new File("Image\\Plane.png"));
-			
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		sprite.image = GetBufferedImage("Plane2.png");
 		
 		input = new PlayerInput(this);
 		movement = new PlayerMovement(this);
@@ -64,8 +58,8 @@ public class Player extends GameObject {
 		}
 	}
 	
-	public void Damage() {
-		health.Damage();
+	public boolean TryDamage() {
+		return health.TryDamage();
 	}
 	
 	

@@ -26,7 +26,7 @@ public class GamePanel extends JPanel{
 				objects.add(i, _object);
 			return;
 			}
-		}
+		}   
 		objects.add(_object);
 	}
 	public void RemoveObject(GameObject _object) {

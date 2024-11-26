@@ -1,6 +1,11 @@
 package Object;
 
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+
+import javax.imageio.ImageIO;
 
 import Game.MainProgram;
 import MonoBehavior.MonoBehavior;
@@ -123,5 +128,17 @@ public class GameObject {
 	
 	public static void Destroy(GameObject _gameObject) {
 		_gameObject.OnDestroy();
+	}
+	
+	public static BufferedImage GetBufferedImage(String fileName) {
+		String pathString = "Image\\" + fileName;
+		
+		try {
+			return ImageIO.read(new File(pathString));
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 }

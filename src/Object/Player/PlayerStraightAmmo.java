@@ -20,13 +20,7 @@ public class PlayerStraightAmmo extends PlayerAmmo{
 
 		name = "StraightAmmo";
 		sprite.sortIndex = 0;
-		try {
-			sprite.image = ImageIO.read(new File("Image\\Bullet1.png"));
-			
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		sprite.image = GetBufferedImage("Bullet1.png");
 		
 		sprite.color = Color.YELLOW;
 	}

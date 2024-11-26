@@ -1,4 +1,4 @@
-package Object.Enemy.Attack;
+package Object.Enemy.Attack.Ammo;
 
 import Game.GameManager;
 import Object.AmmoObject;
@@ -39,9 +39,10 @@ public class EnemyAmmo extends AmmoObject{
 	@Override
 	public void OnCollisionEnter(GameObject _collision) {
 		if(_collision.CompareTag(Tag.PlayerHitBox)) {
-			Destroy();
-			((PlayerHitBox)_collision).Damage();
-			GameManager.instance.Enemy.ReturnAmmo(this);
+			if(((PlayerHitBox)_collision).TryDamage()) {
+				Destroy();
+				GameManager.instance.Enemy.ReturnAmmo(this);
+			}
 		}
 	}
 	

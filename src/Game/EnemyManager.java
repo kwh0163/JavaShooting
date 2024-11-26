@@ -4,8 +4,8 @@ import java.util.ArrayList;
 
 import Object.GameObject;
 import Object.Enemy.*;
-import Object.Enemy.Attack.EnemyAmmo;
-import Object.Enemy.Attack.NormalEnemyAmmo;
+import Object.Enemy.Attack.Ammo.EnemyAmmo;
+import Object.Enemy.Attack.Ammo.NormalEnemyAmmo;
 import Object.Player.PlayerAmmo;
 import Object.Player.PlayerGuidanceAmmo;
 import Object.Player.PlayerStraightAmmo;

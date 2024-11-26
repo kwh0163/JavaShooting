@@ -1,4 +1,4 @@
-package Object.Enemy.Attack;
+package Object.Enemy.Attack.Ammo;
 
 import java.awt.Color;
 import java.io.File;
@@ -19,13 +19,7 @@ public class NormalEnemyAmmo extends EnemyAmmo {
 		
 		sprite.color = Color.black;
 		
-		try {
-			sprite.image = ImageIO.read(new File("Image\\Bullet.png"));
-			
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		sprite.image = GetBufferedImage("Bullet.png");
 		
 		collider = new CircleCollider(this, rigidBody);
 		((CircleCollider)collider).radius = 0.2;

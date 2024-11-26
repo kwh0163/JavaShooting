@@ -24,6 +24,7 @@ public class KeyActionHandler {
         _inputMap.put(KeyStroke.getKeyStroke("LEFT"), "moveLeft");
         _inputMap.put(KeyStroke.getKeyStroke("RIGHT"), "moveRight");
         _inputMap.put(KeyStroke.getKeyStroke("Z"), "attack");
+        _inputMap.put(KeyStroke.getKeyStroke("Q"), "leveltest");
 
         // 키 뗐을 때
         _inputMap.put(KeyStroke.getKeyStroke("released UP"), "releaseUp");
@@ -38,6 +39,7 @@ public class KeyActionHandler {
         _actionMap.put("moveLeft", new MoveAction("LEFT", true));
         _actionMap.put("moveRight", new MoveAction("RIGHT", true));
         _actionMap.put("attack", new AttackAction(true));
+        _actionMap.put("leveltest", new Test());
 
         // 키 해제 처리
         _actionMap.put("releaseUp", new MoveAction("UP", false));
@@ -73,6 +75,12 @@ public class KeyActionHandler {
             Vector2 combinedDirection = calculateDirection();
             PlayerInput.instance.Move(combinedDirection); // 이동 처리
         }
+    }
+    private class Test extends AbstractAction{
+    	@Override
+    	public void actionPerformed(ActionEvent e) {
+    		PlayerInput.instance.LevelUp();
+    	}
     }
     private class AttackAction extends AbstractAction{
     	private final boolean isPressed;

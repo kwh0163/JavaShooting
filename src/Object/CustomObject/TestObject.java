@@ -58,7 +58,7 @@ public class TestObject extends Enemy{
 		else {
 			counter = 0;
 			attack.Attack();
-			System.out.println("Attack");
+			//System.out.println("Attack");
 		}
 		
 		

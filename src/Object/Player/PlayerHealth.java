@@ -24,11 +24,12 @@ public class PlayerHealth extends MonoBehavior {
 		HitEffect();
 	}
 	
-	public void Damage() {
+	public boolean TryDamage() {
 		if(!isHitable)
-			return;
+			return false;
 		hp--;
 		isHitable = false;
+		return true;
 	}
 	
 	private void HitEffect() {

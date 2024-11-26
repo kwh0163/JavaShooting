@@ -11,7 +11,7 @@ public class PlayerAttack extends MonoBehavior {
 	public static PlayerAttack instance;
 	
 	private Player origin;
-	public int level = 2;
+	public int level = 3;
 	public boolean isAttacking = false;
 	
 	private Pool<PlayerStraightAmmo> straightPool;
@@ -75,7 +75,7 @@ public class PlayerAttack extends MonoBehavior {
 		}
 		ammo.Reset(_position, _degree);
 	}
-	private void CreateGuideAmmo(Vector2 _position, Vector2 _firstDirection) {
+	private void CreateGuideAmmo(Vector2 _position, float _degree) {
 		PlayerGuidanceAmmo ammo;
 		if(guidancePool.IsEmpty()) {
 			ammo = new PlayerGuidanceAmmo(_position, this);
@@ -86,7 +86,7 @@ public class PlayerAttack extends MonoBehavior {
 			if(ammo.isActive)
 				System.out.println("Ammo Is Already Active");
 		}
-		ammo.Reset(_position, _firstDirection);
+		ammo.Reset(_position, _degree);
 	}
 	
 	public void ReturnAmmo(PlayerAmmo _ammo) {
@@ -113,26 +113,27 @@ public class PlayerAttack extends MonoBehavior {
 			CreateStraightAmmo(origin.transform.GetPosition(),0);
 			break;
 		case 2:
-			CreateStraightAmmo(origin.transform.GetPosition().Add(new Vector2(7, 0)),0);
-			CreateStraightAmmo(origin.transform.GetPosition().Add(new Vector2(-7, 0)),0);
+			CreateStraightAmmo(origin.transform.GetPosition().Add(new Vector2(3, 0)), -2);
+			CreateStraightAmmo(origin.transform.GetPosition().Add(new Vector2(-3, 0)), 2);
 			break;
 		case 3:
 			CreateStraightAmmo(origin.transform.GetPosition(), 0);
-			CreateStraightAmmo(origin.transform.GetPosition().Add(new Vector2(15, 0)), -20);
-			CreateStraightAmmo(origin.transform.GetPosition().Add(new Vector2(-15, 0)),20);
+			CreateStraightAmmo(origin.transform.GetPosition().Add(new Vector2(6, 0)), -4);
+			CreateStraightAmmo(origin.transform.GetPosition().Add(new Vector2(-6, 0)), 4);
 			break;
 		case 4:
-			CreateStraightAmmo(origin.transform.GetPosition().Add(new Vector2(7, 0)),0);
-			CreateStraightAmmo(origin.transform.GetPosition().Add(new Vector2(-7, 0)),0);
-			CreateStraightAmmo(origin.transform.GetPosition().Add(new Vector2(21, 0)),-20);
-			CreateStraightAmmo(origin.transform.GetPosition().Add(new Vector2(-21, 0)),20);
+			CreateStraightAmmo(origin.transform.GetPosition().Add(new Vector2(3, 0)), -2);
+			CreateStraightAmmo(origin.transform.GetPosition().Add(new Vector2(9, 0)), -6);
+			CreateStraightAmmo(origin.transform.GetPosition().Add(new Vector2(-3, 0)), 2);
+			CreateStraightAmmo(origin.transform.GetPosition().Add(new Vector2(-9, 0)), 6);
+			break;
 		case 5:
 		default:
 			CreateStraightAmmo(origin.transform.GetPosition(),0);
-			CreateStraightAmmo(origin.transform.GetPosition().Add(new Vector2(15, 0)), -10);
-			CreateStraightAmmo(origin.transform.GetPosition().Add(new Vector2(30, 0)), -20);
-			CreateStraightAmmo(origin.transform.GetPosition().Add(new Vector2(-15, 0)), 10);
-			CreateStraightAmmo(origin.transform.GetPosition().Add(new Vector2(-30, 0)), 20);
+			CreateStraightAmmo(origin.transform.GetPosition().Add(new Vector2(6, 0)), -4);
+			CreateStraightAmmo(origin.transform.GetPosition().Add(new Vector2(12, 0)), -8);
+			CreateStraightAmmo(origin.transform.GetPosition().Add(new Vector2(-6, 0)), 4);
+			CreateStraightAmmo(origin.transform.GetPosition().Add(new Vector2(-12, 0)), 8);
 			break;
 		}
 	}
@@ -149,26 +150,31 @@ public class PlayerAttack extends MonoBehavior {
 		case 1:
 			break;
 		case 2:
-			CreateGuideAmmo(origin.transform.GetPosition(), Vector2.Up());
 			break;
 		case 3:
-			CreateGuideAmmo(origin.transform.GetPosition(), Vector2.Up().rotate(10));
-			CreateGuideAmmo(origin.transform.GetPosition(), Vector2.Up().rotate(-10));
+			CreateGuideAmmo(origin.transform.GetPosition().Add(new Vector2(-10, 0)),30);
+			CreateGuideAmmo(origin.transform.GetPosition().Add(new Vector2(10, 0)), -30);
 			break;
 		case 4:
-			CreateGuideAmmo(origin.transform.GetPosition(), Vector2.Up());
-			CreateGuideAmmo(origin.transform.GetPosition(), Vector2.Up().rotate(20));
-			CreateGuideAmmo(origin.transform.GetPosition(), Vector2.Up().rotate(-20));
+			CreateGuideAmmo(origin.transform.GetPosition().Add(new Vector2(-10, 0)),30);
+			CreateGuideAmmo(origin.transform.GetPosition().Add(new Vector2(10, 0)), -30);
+			CreateGuideAmmo(origin.transform.GetPosition().Add(new Vector2(-10, 0)),50);
+			CreateGuideAmmo(origin.transform.GetPosition().Add(new Vector2(10, 0)), -50);
 			break;
 		case 5:
-			CreateGuideAmmo(origin.transform.GetPosition(), Vector2.Up().rotate(10));
-			CreateGuideAmmo(origin.transform.GetPosition(), Vector2.Up().rotate(30));
-			CreateGuideAmmo(origin.transform.GetPosition(), Vector2.Up().rotate(-10));
-			CreateGuideAmmo(origin.transform.GetPosition(), Vector2.Up().rotate(-30));
-			break;
 		default:
-			CreateGuideAmmo(origin.transform.GetPosition(), Vector2.Up());
+			CreateGuideAmmo(origin.transform.GetPosition().Add(new Vector2(-10, 0)),30);
+			CreateGuideAmmo(origin.transform.GetPosition().Add(new Vector2(10, 0)), -30);
+			CreateGuideAmmo(origin.transform.GetPosition().Add(new Vector2(-10, 0)), 50);
+			CreateGuideAmmo(origin.transform.GetPosition().Add(new Vector2(10, 0)), -50);
+			CreateGuideAmmo(origin.transform.GetPosition().Add(new Vector2(-10, 0)), 70);
+			CreateGuideAmmo(origin.transform.GetPosition().Add(new Vector2(10, 0)), -70);
 			break;
 		}
+	}
+	
+	public void LevelUpTest() {
+		level = level % 5 + 1;
+		System.out.println(String.format("Current Level : %d", level));
 	}
 }
