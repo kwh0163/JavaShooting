@@ -2,6 +2,7 @@ package MonoBehavior;
 
 import Game.MainProgram;
 import Object.GameObject;
+import Util.Debug;
 import Util.Vector2;
 
 public class CircleCollider extends Collider {
@@ -10,11 +11,7 @@ public class CircleCollider extends Collider {
 
     public CircleCollider(GameObject _object, RigidBody _rigid) {
         super(_object, _rigid);
-    }
-    
-    @Override
-    public void Awake() {
-    	super.Awake();
+        
         radius = transform.scale.x;
     }
 
@@ -46,8 +43,9 @@ public class CircleCollider extends Collider {
         	
         if(DEBUG_MODE) {
         	if(isCollision) {
-        	System.out.println(String.format("distance : %f", Vector2.Distance(centerA, centerB)));
-        	System.out.println(String.format("a radius : %f, b radius : %f, combined Radius : %f, defaultPixel : %d", this.radius, other.radius, combinedRadius, MainProgram.defaultPixel));
+        		Debug.Log(String.format("distance : %f", Vector2.Distance(centerA, centerB)));
+        		Debug.Log(String.format("a radius : %f, b radius : %f, combined Radius : %f, defaultPixel : %d", 
+        						this.radius, other.radius, combinedRadius, MainProgram.defaultPixel));
         	}
         }
         		

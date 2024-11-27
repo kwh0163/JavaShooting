@@ -1,6 +1,7 @@
 package Object.Enemy;
 
 import MonoBehavior.MonoBehavior;
+import Util.Debug;
 
 public class EnemyHealth extends MonoBehavior {
 	private static boolean DEBUG_MODE = false;
@@ -18,8 +19,8 @@ public class EnemyHealth extends MonoBehavior {
 	public void Damage(int _damage) {
 		hp -= _damage;
 		if(DEBUG_MODE) {
-			System.out.println(String.format("%s got %d damages.", origin.name, _damage));
-			System.out.println(String.format("%s current HP : %d", origin.name, hp));
+			Debug.Log(String.format("%s got %d damages.", origin.name, _damage));
+			Debug.Log(String.format("%s current HP : %d", origin.name, hp));
 		}
 		
 		if(hp <= 0)
@@ -27,7 +28,8 @@ public class EnemyHealth extends MonoBehavior {
 	}
 	
 	private void KillEnemy() {
-		System.out.println("Kill " + origin.name);
+		Debug.Log("Kill " + origin.name);
 		origin.isActive = false;
+		origin.OnDestroy();
 	}
 }

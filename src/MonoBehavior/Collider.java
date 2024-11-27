@@ -56,7 +56,7 @@ public abstract class Collider extends MonoBehavior{
 		for(int i = 0;i<checkLayers.size();i++) {
 			ArrayList<Collider> colliders = MainProgram.colliderManager.GetColliderList(checkLayers.get(i));
 			if(colliders == null) {
-				System.out.println(checkLayers.get(i).toString() + " is null");
+				Debug.Log(checkLayers.get(i).toString() + " is null");
 				continue;
 			}
 			for(int j = 0;j < colliders.size();j++) {

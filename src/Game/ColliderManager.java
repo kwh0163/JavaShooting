@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import MonoBehavior.Collider;
+import Util.Debug;
 import Util.Layer;
 
 public class ColliderManager {
@@ -34,7 +35,9 @@ public class ColliderManager {
 	
 	public ArrayList<Collider> GetColliderList(Layer _layer){
 		if(DEBUG_MODE)
-			System.out.println(colliderMap);
+			Debug.Log(colliderMap.toString());
+		if(!colliderMap.containsKey(_layer))
+			colliderMap.put(_layer, new ArrayList<Collider>());
 		return colliderMap.get(_layer);
 	}
 

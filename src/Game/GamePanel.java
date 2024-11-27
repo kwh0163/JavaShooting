@@ -79,7 +79,7 @@ public class GamePanel extends JPanel{
 		if(!_object.sprite.isVisible) return;
 
 	    if (DEBUG_MODE) {
-	        System.out.println(String.format("Draw %s in %.2f, %.2f", 
+	    	Debug.Log(String.format("Draw %s in %.2f, %.2f", 
 	            _object.name, _object.transform.GetPosition().x, _object.transform.GetPosition().y));
 	    }
 	    

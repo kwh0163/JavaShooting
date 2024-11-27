@@ -7,6 +7,11 @@ import Util.*;
 public class RigidBody extends MonoBehavior{
 	public RigidBody(GameObject _object) {
 		super(_object);
+	
+		if(DEBUG_MODE)
+			Debug.Log(String.format("%s position : %s", gameObject.name, transform.GetPosition().toString()));
+		transform.rigidBody = this;
+		position = transform.GetPosition();
 	}
 
 	private static final boolean DEBUG_MODE = false;
@@ -16,15 +21,6 @@ public class RigidBody extends MonoBehavior{
 	public Vector2 GetPosition() {
 		return new Vector2(position);
 	}
-	
-	@Override
-	public void Awake() {
-		if(DEBUG_MODE)
-			System.out.println(gameObject.name + " position : " + transform.GetPosition().toString());
-		transform.rigidBody = this;
-		position = transform.GetPosition();
-	}
-
 	@Override
 	public void Update() {
 		transform.SetPosition(position);

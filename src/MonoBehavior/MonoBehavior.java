@@ -5,6 +5,7 @@ import Object.Transform;
 
 public abstract class MonoBehavior {
 	
+	
 	public GameObject gameObject;
 	public Transform transform;
 	

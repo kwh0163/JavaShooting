@@ -15,6 +15,7 @@ public class PlayerAmmo extends AmmoObject{
 		super(_position);
 		
 		layer = Layer.PlayerAmmo;
+		sprite.alpha = 0.5f;
 	}
 	
 	@Override

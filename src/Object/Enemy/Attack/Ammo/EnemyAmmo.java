@@ -46,6 +46,10 @@ public class EnemyAmmo extends AmmoObject{
 		}
 	}
 	
+	public void SetSpeed(float _speed) {
+		speed = _speed;
+	}
+	
 	protected Vector2 GetVelocity() {
 		return rigidBody.velocity.GetNormalized();
 	}

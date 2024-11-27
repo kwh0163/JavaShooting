@@ -7,8 +7,7 @@ import MonoBehavior.Collider;
 import MonoBehavior.RigidBody;
 import Object.GameObject;
 import Object.Enemy.Enemy;
-import Object.Enemy.Attack.IEnemyAttack;
-import Object.Enemy.Attack.PlayerTargettingAttack;
+import Object.Enemy.Attack.NormalAmmoEnemyAttack;
 import Util.*;
 
 public class TestObject extends Enemy{
@@ -16,10 +15,10 @@ public class TestObject extends Enemy{
 	Collider collider;
 	RigidBody rigidBody;
 	
-	IEnemyAttack attack;
+	NormalAmmoEnemyAttack attack;
 	
-	public TestObject(Vector2 _position) {
-		super(_position, 100);
+	public TestObject(Vector2 _position, int _hp) {
+		super(_position, _hp);
 
 		name = "Test Object";
 		tag = Tag.Enemy;
@@ -28,22 +27,11 @@ public class TestObject extends Enemy{
 		rigidBody = new RigidBody(this);
 		
 		collider = new BoxCollider(this, rigidBody);
+		
 		collider.checkLayers.clear();
 		collider.checkLayers.add(Layer.PlayerHitBox);
 		
-		attack = new PlayerTargettingAttack(this);
-	}
-	
-	@Override
-	public void OnCollisionEnter(GameObject _collision) {
-		if(_collision.CompareTag(Tag.PlayerHitBox))
-			sprite.color = Color.BLUE;
-	}
-	
-	@Override
-	public void OnCollisionExit(GameObject _collision) {
-		if(_collision.CompareTag(Tag.PlayerHitBox))
-			sprite.color = Color.RED;
+		attack = new NormalAmmoEnemyAttack(this);
 	}
 
 	
@@ -57,7 +45,7 @@ public class TestObject extends Enemy{
 		}
 		else {
 			counter = 0;
-			attack.Attack();
+			attack.EightWayAttackToPlayer(300);
 			//System.out.println("Attack");
 		}
 		

@@ -13,9 +13,9 @@ public class BackGroundManager extends GameObject {
 		
 		sprite.isVisible = false;
 		
-		new BackGroundObject(new Vector2(400, -300), Vector2.Down().Mul(speed));
-		new BackGroundObject(new Vector2(400, 300), Vector2.Down().Mul(speed));
-		new BackGroundObject(new Vector2(400, 900), Vector2.Down().Mul(speed));
+		(new BackGroundObject(new Vector2(400, -300), Vector2.Down().Mul(speed))).name = "BackGround 1";
+		(new BackGroundObject(new Vector2(400, 300), Vector2.Down().Mul(speed))).name = "BackGround 2";
+		(new BackGroundObject(new Vector2(400, 900), Vector2.Down().Mul(speed))).name = "BackGround 3";
 	}
 	
 

@@ -10,14 +10,9 @@ public class BoxCollider extends Collider {
 	
 	public BoxCollider(GameObject gameObject, RigidBody _rigid) {
 		super(gameObject, _rigid);
-	}
-	
-	@Override
-	public void Awake() {
-		super.Awake();
+		
 		colliderSize = transform.GetScale();
 	}
-
 	@Override
     protected boolean CheckCollision(Collider _collider) {
         if (_collider instanceof BoxCollider) {

@@ -6,17 +6,12 @@ import Object.GameObject;
 import Object.Enemy.*;
 import Object.Enemy.Attack.Ammo.EnemyAmmo;
 import Object.Enemy.Attack.Ammo.NormalEnemyAmmo;
-import Object.Player.PlayerAmmo;
-import Object.Player.PlayerGuidanceAmmo;
-import Object.Player.PlayerStraightAmmo;
 import Util.*;
 
 public class EnemyManager extends GameObject{
 	public ArrayList<Enemy> enemyList;
 	
 	public Pool<NormalEnemyAmmo> normalAmmoPool;
-	
-	private double timeCounter = 0;
 	
 	public EnemyManager() {
 		super(Vector2.Zero());
@@ -27,13 +22,6 @@ public class EnemyManager extends GameObject{
 		
 		enemyList = new ArrayList<Enemy>();
 	}
-	
-	@Override
-	public void Update() {
-		super.Update();
-		timeCounter += Time.DeltaTime();
-	}
-	
 	public void AddEnemy(Enemy _enemy) {
 		enemyList.add(_enemy);
 	}
@@ -51,7 +39,7 @@ public class EnemyManager extends GameObject{
 		else {
 			ammo = normalAmmoPool.GetPool();
 			if(ammo.isActive)
-				System.out.println("Ammo Is Already Active");
+				Debug.Log("Ammo Is Already Active");
 		}
 		ammo.Reset(_position, _firstDirection);
 		

@@ -30,8 +30,10 @@ public class Time {
 			process2 = System.currentTimeMillis();
 			
 			if(process1 - a >= (1000.0 / FPS)){
-				if(DEBUG_FPS)
-					System.out.println(1000.0 / (process1 - a));
+				if(DEBUG_FPS) {
+					double temp = 1000.0 / (process1 - a);
+					Debug.Log(String.format("Current FPS : %f", temp));
+				}
 				deltaTime = (float)((process1 - a) / 1000.0000);
 				a = process1;
 				

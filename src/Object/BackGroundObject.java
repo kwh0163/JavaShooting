@@ -10,6 +10,8 @@ public class BackGroundObject extends GameObject{
 	public BackGroundObject(Vector2 _position, Vector2 _velocity) {
 		super(_position);
 		
+		name = "BackGround";
+		
 		transform.scale = new Vector2(16.7, 12.5);
 		
 		rigidBody = new RigidBody(this);

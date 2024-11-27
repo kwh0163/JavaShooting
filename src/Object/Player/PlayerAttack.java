@@ -3,6 +3,7 @@ package Object.Player;
 import Game.GameManager;
 import MonoBehavior.MonoBehavior;
 import Object.Enemy.Enemy;
+import Util.Debug;
 import Util.Pool;
 import Util.Time;
 import Util.Vector2;
@@ -25,22 +26,20 @@ public class PlayerAttack extends MonoBehavior {
 	public Enemy targetEnemy;
 
 	public void FindTarget() {
-		if(targetEnemy == null || !targetEnemy.isActive) {
-			double distance = -1;
-			for(int i = 0;i<GameManager.instance.Enemy.enemyList.size();i++) {
-				Enemy currentEnemy = GameManager.instance.Enemy.enemyList.get(i);
-				if(!currentEnemy.isActive)
-					continue;
-				double enemyDistance = Vector2.Distance(origin.transform.GetPosition(), currentEnemy.transform.GetPosition());
-				if(distance < 0) {
-					targetEnemy = currentEnemy;
-					distance = enemyDistance;
-					continue;
-				}
-				if(distance > enemyDistance) {
-					targetEnemy = currentEnemy;
-					distance = enemyDistance;
-				}
+		double distance = -1;
+		for(int i = 0;i<GameManager.instance.Enemy.enemyList.size();i++) {
+			Enemy currentEnemy = GameManager.instance.Enemy.enemyList.get(i);
+			if(!currentEnemy.isActive)
+				continue;
+			double enemyDistance = Vector2.Distance(origin.transform.GetPosition(), currentEnemy.transform.GetPosition());
+			if(distance < 0) {
+				targetEnemy = currentEnemy;
+				distance = enemyDistance;
+				continue;
+			}
+			if(distance > enemyDistance) {
+				targetEnemy = currentEnemy;
+				distance = enemyDistance;
 			}
 		}
 	}
@@ -55,7 +54,6 @@ public class PlayerAttack extends MonoBehavior {
 	@Override
 	public void Update() {
 		super.Update();
-		FindTarget();
 		Attack();
 	}
 	
@@ -84,7 +82,7 @@ public class PlayerAttack extends MonoBehavior {
 		else {
 			ammo = guidancePool.GetPool();
 			if(ammo.isActive)
-				System.out.println("Ammo Is Already Active");
+				Debug.Log("Ammo Is Already Active");
 		}
 		ammo.Reset(_position, _degree);
 	}
@@ -144,6 +142,9 @@ public class PlayerAttack extends MonoBehavior {
 		}
 		if(!isAttacking)
 			return;
+		
+		if(level > 2)
+			FindTarget();
 		guideAttackSpeedCounter = 0;
 		
 		switch (level) {
@@ -175,6 +176,6 @@ public class PlayerAttack extends MonoBehavior {
 	
 	public void LevelUpTest() {
 		level = level % 5 + 1;
-		System.out.println(String.format("Current Level : %d", level));
+		Debug.Log(String.format("Current Level : %d", level));
 	}
 }
