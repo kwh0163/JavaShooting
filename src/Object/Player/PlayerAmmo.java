@@ -1,5 +1,6 @@
 package Object.Player;
 
+import Game.MainProgram;
 import Object.AmmoObject;
 import Object.GameObject;
 import Object.Enemy.Enemy;
@@ -27,6 +28,16 @@ public class PlayerAmmo extends AmmoObject{
 	}
 	
 	@Override
+	public void FixedUpdate() {
+		super.FixedUpdate();
+		
+		if(MainProgram.IsOveredWorld(rigidBody.position)) {
+			Destroy();
+			PlayerAttack.instance.ReturnAmmo(this);
+		}
+	}
+	
+	@Override
 	public void OnCollisionEnter(GameObject _collision) {
 		if(_collision.CompareTag(Tag.Enemy)) {
 			Destroy();
@@ -34,4 +45,5 @@ public class PlayerAmmo extends AmmoObject{
 			((Enemy)_collision).Damage(damage);
 		}
 	}
+	
 }

@@ -31,12 +31,5 @@ public class PlayerStraightAmmo extends PlayerAmmo{
 		rigidBody.velocity = Vector2.Up().rotate(_degree).GetNormalized().Mul(speed);
 		isActive = true;
 	}
-	
-	@Override
-	public void FixedUpdate() {
-		super.FixedUpdate();
-		if(transform.GetPosition().y >= 800)
-			Destroy();
-	}
 
 }

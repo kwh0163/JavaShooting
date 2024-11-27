@@ -29,6 +29,9 @@ public abstract class Wave extends MonoBehavior {
 		isWaveStarted = true;
 	}
 	public void EndWave() {
+		if(isWaveEnd)
+			return;
+		
 		if(DEBUG_MODE) 
 			Debug.Log(String.format("%s is end.", waveName));
 		

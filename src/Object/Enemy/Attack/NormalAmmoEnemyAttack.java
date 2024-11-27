@@ -50,14 +50,18 @@ public class NormalAmmoEnemyAttack{
 		PieAttack(direction, speed, count, degree);
 	}
 	
-	public void EightWayAttackWithDegree() {
-		
-	}
-	public void EightWayAttackToPlayer(int _speed) {
-		Vector2 direction = GameManager.instance.Player.transform.GetPosition().Sub(origin.transform.GetPosition()).GetNormalized();
-		for(int i = 0;i < 8;i++) {
-			StraightAttack(direction, _speed);
-			direction = direction.rotate(45);
+	public void CircleAttack(Vector2 _direction,int speed ,int count) {
+		float degree = 360 / count;
+		for(int i = 0;i<count;i++) {
+			StraightAttack(_direction.rotate(degree * i), speed);
 		}
+	}
+	public void CircleAttackToPlayer(int speed, int count) {
+		Vector2 direction = GetDirectionToPlayer();
+		CircleAttack(direction, speed, count);
+	}
+	
+	Vector2 GetDirectionToPlayer() {
+		return GameManager.instance.Player.transform.GetPosition().Sub(origin.transform.GetPosition()).GetNormalized();
 	}
 }

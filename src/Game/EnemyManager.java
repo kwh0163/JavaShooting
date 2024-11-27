@@ -28,11 +28,12 @@ public class EnemyManager extends GameObject{
 	public void RemoveEnemy(Enemy _enemy) {
 		enemyList.remove(_enemy);
 	}
-	
+	int count = 0;
 	public NormalEnemyAmmo GetNormalAmmo(Vector2 _position, Vector2 _firstDirection) {
 		
 		NormalEnemyAmmo ammo;
 		if(normalAmmoPool.IsEmpty()) {
+			Debug.Log("New Ammo : " + count++);
 			ammo = new NormalEnemyAmmo(_position);
 			ammo.poolIndex = normalAmmoPool.AddPool(ammo);
 		}

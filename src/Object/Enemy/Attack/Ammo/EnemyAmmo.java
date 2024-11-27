@@ -1,6 +1,7 @@
 package Object.Enemy.Attack.Ammo;
 
 import Game.GameManager;
+import Game.MainProgram;
 import Object.AmmoObject;
 import Object.GameObject;
 import Object.Player.*;
@@ -35,7 +36,17 @@ public class EnemyAmmo extends AmmoObject{
 		super.Update();
 		rigidBody.velocity = GetVelocity().Mul(speed);
 	}
+
 	
+	@Override
+	public void FixedUpdate() {
+		super.FixedUpdate();
+		
+		if(MainProgram.IsOveredWorld(rigidBody.position)) {
+			Destroy();
+			GameManager.instance.Enemy.ReturnAmmo(this);
+		}
+	}
 	@Override
 	public void OnCollisionEnter(GameObject _collision) {
 		if(_collision.CompareTag(Tag.PlayerHitBox)) {

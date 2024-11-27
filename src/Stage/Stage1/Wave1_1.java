@@ -20,7 +20,7 @@ public class Wave1_1 extends Wave{
 
 	@Override
 	public void StartWave() {
-		
+		super.StartWave();
 		TestObject testObject = new TestObject(new Vector2(400, 400), 50);
 		testObject.SetWave(this);
 	}

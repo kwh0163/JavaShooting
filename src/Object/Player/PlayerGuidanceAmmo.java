@@ -56,13 +56,6 @@ public class PlayerGuidanceAmmo extends PlayerAmmo{
 		}
 	}
 	
-	@Override
-	public void FixedUpdate() {
-		super.FixedUpdate();
-		if(MainProgram.IsOveredWorld(transform.GetPosition()))
-			Destroy();
-	}
-	
 	private Vector2 GetGuideVelocity() {
 		Vector2 direction;
 		if(origin.targetEnemy == null || !origin.targetEnemy.isActive)

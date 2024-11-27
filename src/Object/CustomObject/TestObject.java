@@ -45,7 +45,7 @@ public class TestObject extends Enemy{
 		}
 		else {
 			counter = 0;
-			attack.EightWayAttackToPlayer(300);
+			attack.CircleAttackToPlayer(100, 8);
 			//System.out.println("Attack");
 		}
 		
