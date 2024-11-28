@@ -86,12 +86,14 @@ public class GamePanel extends JPanel{
 	    if(_object.sprite.alpha == 0) return;
 	    
 	    Vector2 position = _object.transform.GetPosition();
+	    
 	    position = GetPivotPosition(_object);
 	    position.y = MainProgram.height - position.y;
 
+	    Vector2 rotatePosition = GetRotatePivotPosition(_object);
 	    double angleInRadians = Math.toRadians(-_object.transform.rotation);
 	    
-	    graphics.rotate(angleInRadians, position.x, position.y);
+	    graphics.rotate(angleInRadians, rotatePosition.x, rotatePosition.y);
 
 	    // 사각형 정보
 	    Rectangle2D rect = new Rectangle2D.Double(
@@ -122,7 +124,7 @@ public class GamePanel extends JPanel{
 	        graphics.fill(rect);
 	    }
 	    
-	    graphics.rotate(-angleInRadians, position.x, position.y);
+	    graphics.rotate(-angleInRadians, rotatePosition.x, rotatePosition.y);
         
         graphics.setComposite(originalComposite);
 	}
@@ -131,6 +133,12 @@ public class GamePanel extends JPanel{
 		Vector2 pivotPosition = new Vector2(_object.transform.GetPosition());
 		pivotPosition.x -= (MainProgram.defaultPixel * _object.transform.scale.x * _object.transform.pivot.x);
 		pivotPosition.y += (MainProgram.defaultPixel * _object.transform.scale.y * _object.transform.pivot.y);
+		
+		return pivotPosition;
+	}
+	private Vector2 GetRotatePivotPosition(GameObject _object) {
+		Vector2 pivotPosition = _object.transform.GetPosition();
+		pivotPosition.y = MainProgram.height - pivotPosition.y;
 		
 		return pivotPosition;
 	}

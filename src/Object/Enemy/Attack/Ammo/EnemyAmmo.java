@@ -13,7 +13,6 @@ public class EnemyAmmo extends AmmoObject{
 	
 	public int poolIndex;
 	
-	protected float speed = 500;
 	
 	public EnemyAmmo(Vector2 _position) {
 		super(_position);
@@ -32,16 +31,8 @@ public class EnemyAmmo extends AmmoObject{
 	}
 	
 	@Override
-	public void Update() {
-		super.Update();
-		rigidBody.velocity = GetVelocity().Mul(speed);
-	}
-
-	
-	@Override
 	public void FixedUpdate() {
 		super.FixedUpdate();
-		
 		if(MainProgram.IsOveredWorld(rigidBody.position)) {
 			Destroy();
 			GameManager.instance.Enemy.ReturnAmmo(this);
@@ -57,17 +48,8 @@ public class EnemyAmmo extends AmmoObject{
 		}
 	}
 	
-	public void SetSpeed(float _speed) {
-		speed = _speed;
-	}
-	
-	protected Vector2 GetVelocity() {
-		return rigidBody.velocity.GetNormalized();
-	}
-	
-	public void Reset(Vector2 _position, Vector2 _firstDirection) {
+	public void Reset(Vector2 _position) {
 		transform.SetPosition(_position);
-		rigidBody.velocity = _firstDirection.GetNormalized();
 		isActive = true;
 	}
 

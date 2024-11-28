@@ -31,4 +31,9 @@ public class Enemy extends GameObject{
 	public void Damage(int _damage) {
 		health.Damage(_damage);
 	}
+	
+	public Vector2 GetDirectionToPlayer() {
+
+		return GameManager.instance.Player.transform.GetPosition().Sub(transform.GetPosition()).GetNormalized();
+	}
 }

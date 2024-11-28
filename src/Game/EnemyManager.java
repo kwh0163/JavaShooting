@@ -29,8 +29,7 @@ public class EnemyManager extends GameObject{
 		enemyList.remove(_enemy);
 	}
 	int count = 0;
-	public NormalEnemyAmmo GetNormalAmmo(Vector2 _position, Vector2 _firstDirection) {
-		
+	public NormalEnemyAmmo GetNormalAmmo(Vector2 _position, NormalAmmoEnum ammoType) {
 		NormalEnemyAmmo ammo;
 		if(normalAmmoPool.IsEmpty()) {
 			ammo = new NormalEnemyAmmo(_position);
@@ -41,7 +40,8 @@ public class EnemyManager extends GameObject{
 			if(ammo.isActive)
 				Debug.Log("Ammo Is Already Active");
 		}
-		ammo.Reset(_position, _firstDirection);
+		ammo.Reset(_position);
+		ammo.SetImage(ammoType);
 		
 		return ammo;
 	}

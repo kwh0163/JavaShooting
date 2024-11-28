@@ -12,11 +12,14 @@ public class NormalEnemy extends Enemy{
 	Collider collider;
 	RigidBody rigidBody;
 	
-	NormalAmmoEnemyAttack attack;
+	protected NormalAmmoEnemyAttack attack;
 	
 	public NormalEnemy(Vector2 _position, int _hp) {
 		super(_position, _hp);
 
+		transform.rotation = 180;
+		sprite.image = GetBufferedImage("EnemyPlaneRedYellow.png");
+		
 		name = "Test Object";
 		tag = Tag.Enemy;
 		layer = Layer.Enemy;
@@ -27,6 +30,8 @@ public class NormalEnemy extends Enemy{
 		
 		collider.checkLayers.clear();
 		collider.checkLayers.add(Layer.PlayerHitBox);
+		
+		attack = new NormalAmmoEnemyAttack(this);
 	}
 	
 }

@@ -22,6 +22,10 @@ public class PlayerInput{
 	public void Attack(boolean _isAttacking) {
 		origin.attack.isAttacking = _isAttacking;
 	}
+	public void Focus(boolean _isFocusing) {
+		origin.movement.Focus(_isFocusing);
+		origin.attack.Focus(_isFocusing);
+	}
 	public void LevelUp() {
 		origin.attack.LevelUpTest();
 	}

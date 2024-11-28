@@ -10,7 +10,7 @@ public class GameManager {
 	public Player Player;
 	public EnemyManager Enemy;
 	
-	public GameManager() {
+	public GameManager(int characterNumber) {
 		instance = this;
 		new BackGroundManager(Vector2.Zero());
 		
@@ -18,6 +18,6 @@ public class GameManager {
 		
 		new StageManager(Vector2.Zero());
 		
-		Player = new Player(new Vector2(0, 0));
+		Player = new Player(new Vector2(0, 0), characterNumber);
 	}
 }

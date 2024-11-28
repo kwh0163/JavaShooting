@@ -4,6 +4,7 @@ import javax.swing.*;
 import Object.Player.PlayerInput;
 import Util.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -24,6 +25,7 @@ public class KeyActionHandler {
         _inputMap.put(KeyStroke.getKeyStroke("LEFT"), "moveLeft");
         _inputMap.put(KeyStroke.getKeyStroke("RIGHT"), "moveRight");
         _inputMap.put(KeyStroke.getKeyStroke("Z"), "attack");
+        _inputMap.put(KeyStroke.getKeyStroke("C"), "Focus");
         _inputMap.put(KeyStroke.getKeyStroke("Q"), "leveltest");
 
         // 키 뗐을 때
@@ -32,6 +34,7 @@ public class KeyActionHandler {
         _inputMap.put(KeyStroke.getKeyStroke("released LEFT"), "releaseLeft");
         _inputMap.put(KeyStroke.getKeyStroke("released RIGHT"), "releaseRight");
         _inputMap.put(KeyStroke.getKeyStroke("released Z"), "releaseAttack");
+        _inputMap.put(KeyStroke.getKeyStroke("released C"), "releaseFocus");
 
         // 키 입력 처리
         _actionMap.put("moveUp", new MoveAction("UP", true));
@@ -39,6 +42,7 @@ public class KeyActionHandler {
         _actionMap.put("moveLeft", new MoveAction("LEFT", true));
         _actionMap.put("moveRight", new MoveAction("RIGHT", true));
         _actionMap.put("attack", new AttackAction(true));
+        _actionMap.put("Focus", new FocusAction(true));
         _actionMap.put("leveltest", new LevelUpTest());
 
         // 키 해제 처리
@@ -47,6 +51,7 @@ public class KeyActionHandler {
         _actionMap.put("releaseLeft", new MoveAction("LEFT", false));
         _actionMap.put("releaseRight", new MoveAction("RIGHT", false));
         _actionMap.put("releaseAttack", new AttackAction(false));
+        _actionMap.put("releaseFocus", new FocusAction(false));
     }
 
     private class MoveAction extends AbstractAction {
@@ -80,6 +85,18 @@ public class KeyActionHandler {
     	@Override
     	public void actionPerformed(ActionEvent e) {
     		PlayerInput.instance.LevelUp();
+    	}
+    }
+    private class FocusAction extends AbstractAction{
+    	private final boolean isPressed;
+    	
+    	public FocusAction(boolean _isPressed) {
+    		isPressed = _isPressed;
+    	}
+    	
+    	@Override
+    	public void actionPerformed(ActionEvent e) {
+    		PlayerInput.instance.Focus(isPressed);
     	}
     }
     private class AttackAction extends AbstractAction{

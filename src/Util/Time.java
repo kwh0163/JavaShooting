@@ -5,7 +5,7 @@ import Game.*;
 public class Time {
 	private static boolean DEBUG_FPS;
 	
-	private static int FPS = 60;
+	private static int FPS = 62;
 	private static float deltaTime = 0;
 	private static float fixedDeltaTime = 0.02f;
 	

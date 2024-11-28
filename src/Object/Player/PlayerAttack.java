@@ -1,5 +1,7 @@
 package Object.Player;
 
+import java.awt.image.BufferedImage;
+
 import Game.GameManager;
 import MonoBehavior.MonoBehavior;
 import Object.Enemy.Enemy;
@@ -8,20 +10,21 @@ import Util.Pool;
 import Util.Time;
 import Util.Vector2;
 
-public class PlayerAttack extends MonoBehavior {
+public abstract class PlayerAttack extends MonoBehavior {
 	public static PlayerAttack instance;
 	
-	private Player origin;
+	protected Player origin;
 	public int level = 3;
 	public boolean isAttacking = false;
 	
 	private Pool<PlayerStraightAmmo> straightPool;
 	private Pool<PlayerGuidanceAmmo> guidancePool;
 	
-	private double straightAttackSpeed = 0.1;
-	private double straightAttackSpeedCounter = 0;
-	private double guideAttackSpeed = 0.1;
-	private double guideAttackSpeedCounter = 0;
+	protected double firstAttackSpeed = 0.1;
+	protected double firstAttackSpeedCounter = 0;
+	protected double secondAttackSpeed = 0.1;
+	protected double secondAttackSpeedCounter = 0;
+	protected boolean isFocussing = false;
 	
 	public Enemy targetEnemy;
 
@@ -56,13 +59,16 @@ public class PlayerAttack extends MonoBehavior {
 		super.Update();
 		Attack();
 	}
+	public void Focus(boolean _isFocussing) {
+		isFocussing = _isFocussing;
+	}
 	
 	public void Attack() {
-		StraightAmmo();
-		GuideAmmo();
+		FirstAmmo();
+		SecondAmmo();
 	}
 
-	private void CreateStraightAmmo(Vector2 _position, float _degree) {
+	protected void CreateStraightAmmo(Vector2 _position, float _degree, int imageNumber) {
 		PlayerStraightAmmo ammo;
 		if(straightPool.IsEmpty()) {
 			ammo = new PlayerStraightAmmo(_position);
@@ -72,8 +78,9 @@ public class PlayerAttack extends MonoBehavior {
 			ammo = straightPool.GetPool();
 		}
 		ammo.Reset(_position, _degree);
+		ammo.SetAmmoImage(imageNumber);
 	}
-	private void CreateGuideAmmo(Vector2 _position, float _degree) {
+	protected void CreateGuideAmmo(Vector2 _position, float _degree) {
 		PlayerGuidanceAmmo ammo;
 		if(guidancePool.IsEmpty()) {
 			ammo = new PlayerGuidanceAmmo(_position, this);
@@ -96,83 +103,9 @@ public class PlayerAttack extends MonoBehavior {
 		}
 	}
 	
-	private void StraightAmmo() {
-		if(straightAttackSpeedCounter < straightAttackSpeed) {
-			straightAttackSpeedCounter += Time.DeltaTime();
-			return;
-		}
-		if(!isAttacking)
-			return;
-		
-		straightAttackSpeedCounter = 0;
-		
-		switch (level) {
-		case 1: 
-			CreateStraightAmmo(origin.transform.GetPosition(),0);
-			break;
-		case 2:
-			CreateStraightAmmo(origin.transform.GetPosition().Add(new Vector2(3, 0)), -2);
-			CreateStraightAmmo(origin.transform.GetPosition().Add(new Vector2(-3, 0)), 2);
-			break;
-		case 3:
-			CreateStraightAmmo(origin.transform.GetPosition(), 0);
-			CreateStraightAmmo(origin.transform.GetPosition().Add(new Vector2(6, 0)), -4);
-			CreateStraightAmmo(origin.transform.GetPosition().Add(new Vector2(-6, 0)), 4);
-			break;
-		case 4:
-			CreateStraightAmmo(origin.transform.GetPosition().Add(new Vector2(3, 0)), -2);
-			CreateStraightAmmo(origin.transform.GetPosition().Add(new Vector2(9, 0)), -6);
-			CreateStraightAmmo(origin.transform.GetPosition().Add(new Vector2(-3, 0)), 2);
-			CreateStraightAmmo(origin.transform.GetPosition().Add(new Vector2(-9, 0)), 6);
-			break;
-		case 5:
-		default:
-			CreateStraightAmmo(origin.transform.GetPosition(),0);
-			CreateStraightAmmo(origin.transform.GetPosition().Add(new Vector2(6, 0)), -4);
-			CreateStraightAmmo(origin.transform.GetPosition().Add(new Vector2(12, 0)), -8);
-			CreateStraightAmmo(origin.transform.GetPosition().Add(new Vector2(-6, 0)), 4);
-			CreateStraightAmmo(origin.transform.GetPosition().Add(new Vector2(-12, 0)), 8);
-			break;
-		}
-	}
-	private void GuideAmmo() {
-		if(guideAttackSpeedCounter < guideAttackSpeed) {
-			guideAttackSpeedCounter += Time.DeltaTime();
-			return;
-		}
-		if(!isAttacking)
-			return;
-		
-		if(level > 2)
-			FindTarget();
-		guideAttackSpeedCounter = 0;
-		
-		switch (level) {
-		case 1:
-			break;
-		case 2:
-			break;
-		case 3:
-			CreateGuideAmmo(origin.transform.GetPosition().Add(new Vector2(-10, 0)),30);
-			CreateGuideAmmo(origin.transform.GetPosition().Add(new Vector2(10, 0)), -30);
-			break;
-		case 4:
-			CreateGuideAmmo(origin.transform.GetPosition().Add(new Vector2(-10, 0)),30);
-			CreateGuideAmmo(origin.transform.GetPosition().Add(new Vector2(10, 0)), -30);
-			CreateGuideAmmo(origin.transform.GetPosition().Add(new Vector2(-10, 0)),50);
-			CreateGuideAmmo(origin.transform.GetPosition().Add(new Vector2(10, 0)), -50);
-			break;
-		case 5:
-		default:
-			CreateGuideAmmo(origin.transform.GetPosition().Add(new Vector2(-10, 0)),30);
-			CreateGuideAmmo(origin.transform.GetPosition().Add(new Vector2(10, 0)), -30);
-			CreateGuideAmmo(origin.transform.GetPosition().Add(new Vector2(-10, 0)), 50);
-			CreateGuideAmmo(origin.transform.GetPosition().Add(new Vector2(10, 0)), -50);
-			CreateGuideAmmo(origin.transform.GetPosition().Add(new Vector2(-10, 0)), 70);
-			CreateGuideAmmo(origin.transform.GetPosition().Add(new Vector2(10, 0)), -70);
-			break;
-		}
-	}
+	protected abstract void FirstAmmo() ;
+	
+	protected abstract void SecondAmmo();
 	
 	public void LevelUpTest() {
 		level = level % 5 + 1;

@@ -17,5 +17,6 @@ public class AmmoObject extends GameObject{
 
 	public void Destroy() {
 		isActive = false;
+		rigidBody.velocity = Vector2.Zero();
 	}
 }

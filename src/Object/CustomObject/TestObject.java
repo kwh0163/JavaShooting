@@ -7,31 +7,16 @@ import MonoBehavior.Collider;
 import MonoBehavior.RigidBody;
 import Object.GameObject;
 import Object.Enemy.Enemy;
+import Object.Enemy.NormalEnemy;
 import Object.Enemy.Attack.NormalAmmoEnemyAttack;
 import Util.*;
 
-public class TestObject extends Enemy{
-
-	Collider collider;
-	RigidBody rigidBody;
-	
-	NormalAmmoEnemyAttack attack;
+public class TestObject extends NormalEnemy{
 	
 	public TestObject(Vector2 _position, int _hp) {
 		super(_position, _hp);
-
-		name = "Test Object";
-		tag = Tag.Enemy;
-		layer = Layer.Enemy;
 		
-		rigidBody = new RigidBody(this);
-		
-		collider = new BoxCollider(this, rigidBody);
-		
-		collider.checkLayers.clear();
-		collider.checkLayers.add(Layer.PlayerHitBox);
-		
-		attack = new NormalAmmoEnemyAttack(this);
+		sprite.image = GetBufferedImage("EnemyPlaneBlue.png");
 	}
 
 	

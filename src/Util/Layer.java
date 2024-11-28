@@ -6,6 +6,7 @@ public enum Layer {
 	PlayerHitBox,
 	PlayerAmmo,
 	Enemy,
-	EnemyAmmo
+	EnemyAmmo,
+	Block
 
 }

@@ -4,5 +4,6 @@ public enum Tag {
 	Default,
 	Player,
 	PlayerHitBox,
-	Enemy
+	Enemy,
+	Block
 }
