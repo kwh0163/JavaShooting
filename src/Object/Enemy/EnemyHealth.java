@@ -28,7 +28,8 @@ public class EnemyHealth extends MonoBehavior {
 	}
 	
 	private void KillEnemy() {
-		Debug.Log("Kill " + origin.name);
+		if(DEBUG_MODE)
+			Debug.Log("Kill " + origin.name);
 		origin.isActive = false;
 		origin.OnDestroy();
 	}

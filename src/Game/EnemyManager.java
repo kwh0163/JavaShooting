@@ -33,7 +33,6 @@ public class EnemyManager extends GameObject{
 		
 		NormalEnemyAmmo ammo;
 		if(normalAmmoPool.IsEmpty()) {
-			Debug.Log("New Ammo : " + count++);
 			ammo = new NormalEnemyAmmo(_position);
 			ammo.poolIndex = normalAmmoPool.AddPool(ammo);
 		}

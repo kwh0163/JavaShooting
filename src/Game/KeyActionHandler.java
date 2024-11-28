@@ -39,7 +39,7 @@ public class KeyActionHandler {
         _actionMap.put("moveLeft", new MoveAction("LEFT", true));
         _actionMap.put("moveRight", new MoveAction("RIGHT", true));
         _actionMap.put("attack", new AttackAction(true));
-        _actionMap.put("leveltest", new Test());
+        _actionMap.put("leveltest", new LevelUpTest());
 
         // 키 해제 처리
         _actionMap.put("releaseUp", new MoveAction("UP", false));
@@ -76,7 +76,7 @@ public class KeyActionHandler {
             PlayerInput.instance.Move(combinedDirection); // 이동 처리
         }
     }
-    private class Test extends AbstractAction{
+    private class LevelUpTest extends AbstractAction{
     	@Override
     	public void actionPerformed(ActionEvent e) {
     		PlayerInput.instance.LevelUp();

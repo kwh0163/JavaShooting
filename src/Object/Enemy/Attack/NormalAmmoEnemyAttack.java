@@ -17,7 +17,7 @@ public class NormalAmmoEnemyAttack{
 	}
 	
 	public void PlayerTargettingAttack(float _speed) {
-		Vector2 direction = GameManager.instance.Player.transform.GetPosition().Sub(origin.transform.GetPosition()).GetNormalized();
+		Vector2 direction = GetDirectionToPlayer();
 		GetAmmo(direction).SetSpeed(_speed);
 	}
 	public void StraightAttack(Vector2 _velocity, float _speed) {
@@ -45,7 +45,7 @@ public class NormalAmmoEnemyAttack{
 	}
 	
 	public void PieAttackToPlayer(int speed, int count, int degree) {
-		Vector2 direction = GameManager.instance.Player.transform.GetPosition().Sub(origin.transform.GetPosition()).GetNormalized();
+		Vector2 direction = GetDirectionToPlayer();
 
 		PieAttack(direction, speed, count, degree);
 	}

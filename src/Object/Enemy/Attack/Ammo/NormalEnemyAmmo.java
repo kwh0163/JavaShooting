@@ -21,7 +21,7 @@ public class NormalEnemyAmmo extends EnemyAmmo {
 		
 		sprite.color = Color.black;
 		
-		sprite.image = GetBufferedImage("Bullet.png");
+		sprite.image = GetBufferedImage("RedNormalAmmo.png");
 		
 		collider = new CircleCollider(this, rigidBody);
 		((CircleCollider)collider).radius = 0.2;

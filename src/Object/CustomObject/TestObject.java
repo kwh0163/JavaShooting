@@ -40,12 +40,12 @@ public class TestObject extends Enemy{
 	public void Update() {
 		super.Update();
 		
-		if(counter < 0.2) {
+		if(counter < 1) {
 			counter += Time.DeltaTime();
 		}
 		else {
 			counter = 0;
-			attack.CircleAttackToPlayer(100, 8);
+			attack.CircleAttackToPlayer(100, 30);
 			//System.out.println("Attack");
 		}
 		

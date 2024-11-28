@@ -8,6 +8,7 @@ import Object.GameObject;
 import Util.Debug;
 
 public class Stage extends MonoBehavior{
+	static final boolean DEBUG_MODE = false;
 	int currentWave = 0;
 	
 	boolean isStageCleared = false;
@@ -37,7 +38,8 @@ public class Stage extends MonoBehavior{
 			}
 			else {
 				isStageCleared = true;
-				Debug.Log("Stage Cleared");
+				if(DEBUG_MODE)
+					Debug.Log("Stage Cleared");
 			}
 		}
 	}

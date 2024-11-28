@@ -6,7 +6,7 @@ import Util.Debug;
 import Util.Time;
 
 public abstract class Wave extends MonoBehavior {
-	static final boolean DEBUG_MODE = true;
+	static final boolean DEBUG_MODE = false;
 	
 	public String waveName = "Wave";
 	
