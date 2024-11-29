@@ -26,7 +26,7 @@ public class MainProgram {
 		gameObjectManager = new GameObjectManager();
 		colliderManager = new ColliderManager();
 		
-		StartGame(1);
+		StartGame(0);
 	}
 	
 	public static void StartGame(int characterNumber) {

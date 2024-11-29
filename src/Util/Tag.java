@@ -5,5 +5,6 @@ public enum Tag {
 	Player,
 	PlayerHitBox,
 	Enemy,
-	Block
+	Block,
+	PowerUp
 }

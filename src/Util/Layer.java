@@ -7,6 +7,7 @@ public enum Layer {
 	PlayerAmmo,
 	Enemy,
 	EnemyAmmo,
-	Block
+	Block,
+	Item
 
 }

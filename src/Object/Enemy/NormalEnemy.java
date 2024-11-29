@@ -1,5 +1,6 @@
 package Object.Enemy;
 
+import Game.GameManager;
 import MonoBehavior.BoxCollider;
 import MonoBehavior.Collider;
 import MonoBehavior.RigidBody;
@@ -14,8 +15,8 @@ public class NormalEnemy extends Enemy{
 	
 	protected NormalAmmoEnemyAttack attack;
 	
-	public NormalEnemy(Vector2 _position, int _hp) {
-		super(_position, _hp);
+	public NormalEnemy(Vector2 _position, int _hp, boolean isDropPower) {
+		super(_position, _hp, isDropPower);
 
 		transform.rotation = 180;
 		sprite.image = GetBufferedImage("EnemyPlaneRedYellow.png");

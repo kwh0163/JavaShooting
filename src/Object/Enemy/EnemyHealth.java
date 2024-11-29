@@ -32,8 +32,11 @@ public class EnemyHealth extends MonoBehavior {
 	private void KillEnemy() {
 		if(DEBUG_MODE)
 			Debug.Log("Kill " + origin.name);
+		GameManager.instance.Stage.enemiesDefeated++;
+		GameManager.instance.Score.score += origin.killScore;
+		if(origin.isDropPower)
+			GameManager.instance.GetPowerUp(origin.transform.GetPosition());
 		GameManager.instance.Audio.PlaySound(AudioType.NormalEnemyDie, 0.85f);
-		origin.isActive = false;
 		origin.OnDestroy();
 	}
 }

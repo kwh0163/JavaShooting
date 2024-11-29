@@ -9,5 +9,6 @@ public enum AudioType {
 	EnemyShoot0,
 	EnemyShoot1,
 	EnemyShoot2,
-	NormalEnemyDie
+	NormalEnemyDie,
+	PowerUp
 }

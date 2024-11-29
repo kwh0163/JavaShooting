@@ -7,12 +7,18 @@ import Util.Vector2;
 
 public class Enemy extends GameObject{
 	private EnemyHealth health;
+	public EnemyMovement movement;
 	
 	private Wave checkWave;
 	
-	public Enemy(Vector2 _position, int _hp) {
+	public boolean isDropPower = false;
+	public int killScore = 150;
+	
+	public Enemy(Vector2 _position, int _hp, boolean _isDropPower) {
 		super(_position);
 		health = new EnemyHealth(this, _hp);
+		movement = new EnemyMovement(this);
+		isDropPower = _isDropPower;
 		GameManager.instance.Enemy.AddEnemy(this);
 	}
 	
@@ -23,6 +29,7 @@ public class Enemy extends GameObject{
 	@Override
 	public void OnDestroy() {
 		super.OnDestroy();
+		isActive = false;
 		GameManager.instance.Enemy.RemoveEnemy(this);
 		if(checkWave != null)
 			checkWave.EndWave();

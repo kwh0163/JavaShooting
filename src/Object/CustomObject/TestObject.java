@@ -13,8 +13,8 @@ import Util.*;
 
 public class TestObject extends NormalEnemy{
 	
-	public TestObject(Vector2 _position, int _hp) {
-		super(_position, _hp);
+	public TestObject(Vector2 _position, int _hp, boolean isDropPower) {
+		super(_position, _hp, isDropPower);
 		
 		sprite.image = GetBufferedImage("EnemyPlaneBlue.png");
 	}

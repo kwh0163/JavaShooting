@@ -16,7 +16,7 @@ public class Wave1_3 extends Wave{
 	public void StartWave() {
 		super.StartWave();
 		
-		(new TestObject3(new Vector2(200, 400), 50)).SetWave(this);
+		(new TestObject3(new Vector2(200, 400), 50,true)).SetWave(this);
 	}
 
 }

@@ -41,6 +41,7 @@ public class AudioManager {
 		audioMap.put(AudioType.EnemyShoot1, "tan01.wav");
 		audioMap.put(AudioType.EnemyShoot2, "tan02.wav");
 		audioMap.put(AudioType.NormalEnemyDie, "NormalEnemyDie.wav");
+		audioMap.put(AudioType.PowerUp, "PowerUp.wav");
 		
 	}
 	

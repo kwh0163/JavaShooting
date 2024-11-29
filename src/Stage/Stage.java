@@ -14,7 +14,7 @@ public class Stage extends MonoBehavior{
 	
 	boolean isStageStarted = false;
 	double stageStartCounter = 0;
-	double stageStartTime = 9;
+	double stageStartTime = 3;
 	
 	
 	boolean isStageCleared = false;

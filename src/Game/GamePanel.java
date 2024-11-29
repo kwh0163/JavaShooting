@@ -84,6 +84,9 @@ public class GamePanel extends JPanel{
         // 왼쪽 아래에 생명 표시
         g.drawString("Lives: " + GameManager.instance.Stage.lives, 10, getHeight() - 30);
         
+        //오른쪽 아래에 파워 표시
+        g.drawString("Power: " + GameManager.instance.Stage.power, getWidth() - 100, getHeight() - 30);
+        
         // 왼쪽 위에 적 처치 수 및 진행 시간 표시
         g.drawString("Enemies Defeated: " + GameManager.instance.Stage.enemiesDefeated, 10, 30);
         g.drawString("Time: " + GameManager.instance.Stage.startTime + "s", 10, 60);

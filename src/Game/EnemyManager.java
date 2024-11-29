@@ -3,6 +3,7 @@ package Game;
 import java.util.ArrayList;
 
 import Object.GameObject;
+import Object.PowerUpObject;
 import Object.Enemy.*;
 import Object.Enemy.Attack.Ammo.EnemyAmmo;
 import Object.Enemy.Attack.Ammo.NormalEnemyAmmo;

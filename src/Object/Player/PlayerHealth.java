@@ -8,7 +8,7 @@ import Util.Time;
 public class PlayerHealth extends MonoBehavior {
 	private Player origin;
 	
-	private int hp;
+	public int hp;
 	public boolean isHitable = true;
 	private float hitCounter = 0;
 	private float unbeatableTime = 5;

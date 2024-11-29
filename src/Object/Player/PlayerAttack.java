@@ -58,8 +58,8 @@ public abstract class PlayerAttack extends MonoBehavior {
 		origin = _player;
 	}
 	@Override
-	public void Update() {
-		super.Update();
+	public void LateUpdate() {
+		super.LateUpdate();
 		Attack();
 	}
 	public void Focus(boolean _isFocussing) {
@@ -113,5 +113,16 @@ public abstract class PlayerAttack extends MonoBehavior {
 	public void LevelUpTest() {
 		level = level % 5 + 1;
 		Debug.Log(String.format("Current Level : %d", level));
+	}
+	public void LevelUp() {
+		if(level < 5) {
+			GameManager.instance.Audio.PlaySound(AudioType.PowerUp, 0.8f);
+			GameManager.instance.Score.score += 100;
+			level++;
+		}
+		else {
+			GameManager.instance.Score.score += 1000;
+			Debug.Log("level max");
+		}
 	}
 }

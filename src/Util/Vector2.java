@@ -90,5 +90,15 @@ public class Vector2 {
 		y *= y;
 		return Math.sqrt(x + y);
 	}
+	public static Vector2 Lerp(float value, Vector2 a, Vector2 b) {
+		a = a.Mul(1 - value);
+		b = b.Mul(value);
+		return a.Add(b);
+	}
+	public static Vector2 Lerp(double value, Vector2 a, Vector2 b) {
+		a = a.Mul(1 - value);
+		b = b.Mul(value);
+		return a.Add(b);
+	}
 
 }

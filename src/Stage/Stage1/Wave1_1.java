@@ -1,5 +1,8 @@
 package Stage.Stage1;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 import Object.GameObject;
 import Object.CustomObject.TestObject;
 import Stage.Wave;
@@ -19,8 +22,10 @@ public class Wave1_1 extends Wave{
 	@Override
 	public void StartWave() {
 		super.StartWave();
-		TestObject testObject = new TestObject(new Vector2(400, 400), 50);
+		TestObject testObject = new TestObject(new Vector2(700, 800), 50, true);
+		testObject.movement.MoveCubic_6(20, new Vector2(100, -200));
 		testObject.SetWave(this);
+		
 	}
 
 }

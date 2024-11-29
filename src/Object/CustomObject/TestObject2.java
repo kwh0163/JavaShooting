@@ -9,8 +9,8 @@ import Util.Vector2;
 
 public class TestObject2 extends NormalEnemy{
 
-	public TestObject2(Vector2 _position, int _hp) {
-		super(_position, _hp);
+	public TestObject2(Vector2 _position, int _hp, boolean isDropPower) {
+		super(_position, _hp, isDropPower);
 	}
 	
 	private double patternTime = 2;

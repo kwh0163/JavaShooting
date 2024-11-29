@@ -12,7 +12,7 @@ import Util.Vector2;
 public class EnemyAmmo extends AmmoObject{
 	
 	public int poolIndex;
-	
+	public boolean isGrazed = false;
 	
 	public EnemyAmmo(Vector2 _position) {
 		super(_position);
@@ -51,6 +51,7 @@ public class EnemyAmmo extends AmmoObject{
 	public void Reset(Vector2 _position) {
 		transform.SetPosition(_position);
 		isActive = true;
+		isGrazed = false;
 		if(!GameManager.instance.Player.health.isHitable) {
 			Destroy();
 			GameManager.instance.Enemy.ReturnAmmo(this);

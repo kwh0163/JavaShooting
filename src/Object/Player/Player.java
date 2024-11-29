@@ -18,7 +18,7 @@ public class Player extends GameObject {
 	
 	PlayerInput input;
 	PlayerMovement movement;
-	PlayerAttack attack;
+	public PlayerAttack attack;
 	PlayerHitBox hitBox;
 	public PlayerHealth health;
 
@@ -69,6 +69,7 @@ public class Player extends GameObject {
 		
 		collider = new BoxCollider(this, rigidBody);
 		collider.checkLayers.clear();
+		collider.checkLayers.add(Layer.Item);
 		
 		hitBox = new PlayerHitBox(transform.GetPosition(), this);
 		transform.childTransform = hitBox.transform;
@@ -80,6 +81,13 @@ public class Player extends GameObject {
 		
 		CheckEndOfWorld();
 		
+	}
+	@Override
+	public void OnCollisionEnter(GameObject _collision) {
+		if(_collision.CompareTag(Tag.PowerUp)) {
+			((PowerUpObject)_collision).Destroy();
+			attack.LevelUp();
+		}
 	}
 	
 	public boolean TryDamage() {

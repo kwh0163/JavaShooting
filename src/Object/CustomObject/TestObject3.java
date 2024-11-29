@@ -8,8 +8,8 @@ import Util.Vector2;
 
 public class TestObject3 extends NormalEnemy {
 
-	public TestObject3(Vector2 _position, int _hp) {
-		super(_position, _hp);
+	public TestObject3(Vector2 _position, int _hp, boolean isDropPower) {
+		super(_position, _hp, isDropPower);
 		// TODO Auto-generated constructor stub
 	}
 

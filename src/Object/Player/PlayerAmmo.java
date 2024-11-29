@@ -13,6 +13,8 @@ public class PlayerAmmo extends AmmoObject{
 	
 	public int damage = 1;
 	
+	int enemyHitScore = 5;
+	
 	public PlayerAmmo(Vector2 _position) {
 		super(_position);
 		
@@ -45,6 +47,7 @@ public class PlayerAmmo extends AmmoObject{
 			PlayerAttack.instance.ReturnAmmo(this);
 			((Enemy)_collision).Damage(damage);
 			GameManager.instance.Audio.PlaySound(AudioType.EnemyHit, 0.7f);
+			GameManager.instance.Score.score += enemyHitScore;
 		}
 	}
 	
