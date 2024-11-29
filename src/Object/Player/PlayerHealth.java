@@ -1,15 +1,17 @@
 package Object.Player;
 
+import Game.GameManager;
 import MonoBehavior.MonoBehavior;
+import Util.AudioType;
 import Util.Time;
 
 public class PlayerHealth extends MonoBehavior {
 	private Player origin;
 	
 	private int hp;
-	private boolean isHitable = true;
+	public boolean isHitable = true;
 	private float hitCounter = 0;
-	private float unbeatableTime = 2;
+	private float unbeatableTime = 5;
 	private float hitInterver = 1;
 	
 	public PlayerHealth(Player _origin, int _hp) {
@@ -28,6 +30,7 @@ public class PlayerHealth extends MonoBehavior {
 		if(!isHitable)
 			return false;
 		hp--;
+		GameManager.instance.Audio.PlaySound(AudioType.PlayerHit, 0.85f);
 		isHitable = false;
 		return true;
 	}

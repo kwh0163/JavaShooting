@@ -9,14 +9,18 @@ public class GameManager {
 	
 	public Player Player;
 	public EnemyManager Enemy;
+	public StageManager Stage;
+	public AudioManager Audio;
 	
 	public GameManager(int characterNumber) {
 		instance = this;
 		new BackGroundManager(Vector2.Zero());
 		
+		Audio = new AudioManager();
+		
 		Enemy = new EnemyManager();
 		
-		new StageManager(Vector2.Zero());
+		Stage = new StageManager(Vector2.Zero());
 		
 		Player = new Player(new Vector2(0, 0), characterNumber);
 	}

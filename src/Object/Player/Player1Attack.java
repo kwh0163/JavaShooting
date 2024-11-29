@@ -1,5 +1,7 @@
 package Object.Player;
 
+import Game.GameManager;
+import Util.AudioType;
 import Util.Time;
 import Util.Vector2;
 
@@ -17,7 +19,8 @@ public class Player1Attack extends PlayerAttack{
 		}
 		if(!isAttacking)
 			return;
-		
+
+		GameManager.instance.Audio.PlaySound(AudioType.PlayerShoot, attackVolume);
 		firstAttackSpeedCounter = 0;
 		
 		switch (level) {
@@ -77,7 +80,8 @@ public class Player1Attack extends PlayerAttack{
 		}
 		if(!isAttacking)
 			return;
-		
+
+		GameManager.instance.Audio.PlaySound(AudioType.PlayerShoot, attackVolume);
 		secondAttackSpeedCounter = 0;
 		
 		switch (level) {

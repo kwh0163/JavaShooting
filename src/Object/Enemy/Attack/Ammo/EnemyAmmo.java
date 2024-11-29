@@ -51,6 +51,10 @@ public class EnemyAmmo extends AmmoObject{
 	public void Reset(Vector2 _position) {
 		transform.SetPosition(_position);
 		isActive = true;
+		if(!GameManager.instance.Player.health.isHitable) {
+			Destroy();
+			GameManager.instance.Enemy.ReturnAmmo(this);
+		}
 	}
 
 }

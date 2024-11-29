@@ -1,6 +1,8 @@
 package Object.Enemy;
 
+import Game.GameManager;
 import MonoBehavior.MonoBehavior;
+import Util.AudioType;
 import Util.Debug;
 
 public class EnemyHealth extends MonoBehavior {
@@ -30,6 +32,7 @@ public class EnemyHealth extends MonoBehavior {
 	private void KillEnemy() {
 		if(DEBUG_MODE)
 			Debug.Log("Kill " + origin.name);
+		GameManager.instance.Audio.PlaySound(AudioType.NormalEnemyDie, 0.85f);
 		origin.isActive = false;
 		origin.OnDestroy();
 	}

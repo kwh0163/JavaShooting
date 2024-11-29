@@ -1,8 +1,10 @@
 package Object.Enemy.Attack;
 
 import Game.GameManager;
+import Game.MainProgram;
 import Object.Enemy.Enemy;
 import Object.Enemy.Attack.Ammo.NormalEnemyAmmo;
+import Util.AudioType;
 import Util.NormalAmmoEnum;
 import Util.Vector2;
 
@@ -13,6 +15,7 @@ public class NormalAmmoEnemyAttack{
 		origin = _origin;
 	}
 	
+	float attackVolume = 0.7f;
 	protected NormalEnemyAmmo GetAmmo(NormalAmmoEnum ammoType) {
 		return GameManager.instance.Enemy.GetNormalAmmo(origin.transform.GetPosition(), ammoType);
 	}
@@ -60,6 +63,21 @@ public class NormalAmmoEnemyAttack{
 	public void CircleAttackToPlayer(int speed, int count) {
 		Vector2 direction = origin.GetDirectionToPlayer();
 		CircleAttack(direction, speed, count);
+	}
+	
+	void PlayAttackSound() {
+
+		switch(MainProgram.GetRandom().nextInt(3)) {
+		case 0:
+			GameManager.instance.Audio.PlaySound(AudioType.EnemyShoot0,attackVolume);
+			break;
+		case 1:
+			GameManager.instance.Audio.PlaySound(AudioType.EnemyShoot1, attackVolume);
+			break;
+		case 2:
+			GameManager.instance.Audio.PlaySound(AudioType.EnemyShoot2, attackVolume);
+			break;
+		}
 	}
 	
 }

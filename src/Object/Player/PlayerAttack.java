@@ -5,6 +5,7 @@ import java.awt.image.BufferedImage;
 import Game.GameManager;
 import MonoBehavior.MonoBehavior;
 import Object.Enemy.Enemy;
+import Util.AudioType;
 import Util.Debug;
 import Util.Pool;
 import Util.Time;
@@ -16,6 +17,8 @@ public abstract class PlayerAttack extends MonoBehavior {
 	protected Player origin;
 	public int level = 3;
 	public boolean isAttacking = false;
+	
+	protected float attackVolume = 0.7f;
 	
 	private Pool<PlayerStraightAmmo> straightPool;
 	private Pool<PlayerGuidanceAmmo> guidancePool;

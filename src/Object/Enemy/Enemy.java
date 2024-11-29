@@ -33,7 +33,7 @@ public class Enemy extends GameObject{
 	}
 	
 	public Vector2 GetDirectionToPlayer() {
-
-		return GameManager.instance.Player.transform.GetPosition().Sub(transform.GetPosition()).GetNormalized();
+	    Vector2 direction = GameManager.instance.Player.transform.GetPosition().Sub(transform.GetPosition());
+	    return direction.GetNormalized();
 	}
 }

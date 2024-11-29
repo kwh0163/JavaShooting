@@ -2,6 +2,8 @@ package Object.Player;
 
 import java.awt.image.BufferedImage;
 
+import Game.GameManager;
+import Util.AudioType;
 import Util.Time;
 import Util.Vector2;
 
@@ -20,6 +22,7 @@ public class Player0Attack extends PlayerAttack {
 		if(!isAttacking)
 			return;
 		
+		GameManager.instance.Audio.PlaySound(AudioType.PlayerShoot, attackVolume);
 		firstAttackSpeedCounter = 0;
 		
 		switch (level) {
@@ -64,7 +67,8 @@ public class Player0Attack extends PlayerAttack {
 		if(level > 2)
 			FindTarget();
 		secondAttackSpeedCounter = 0;
-		
+
+		GameManager.instance.Audio.PlaySound(AudioType.PlayerShoot, attackVolume);
 		switch (level) {
 		case 1:
 			break;

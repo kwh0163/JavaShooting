@@ -20,7 +20,7 @@ public class Player extends GameObject {
 	PlayerMovement movement;
 	PlayerAttack attack;
 	PlayerHitBox hitBox;
-	PlayerHealth health;
+	public PlayerHealth health;
 
 	Collider collider;
 	RigidBody rigidBody;

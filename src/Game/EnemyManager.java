@@ -26,24 +26,29 @@ public class EnemyManager extends GameObject{
 		enemyList.add(_enemy);
 	}
 	public void RemoveEnemy(Enemy _enemy) {
-		enemyList.remove(_enemy);
+	    if (enemyList.contains(_enemy)) {
+	        enemyList.remove(_enemy);
+	    }
 	}
 	int count = 0;
 	public NormalEnemyAmmo GetNormalAmmo(Vector2 _position, NormalAmmoEnum ammoType) {
-		NormalEnemyAmmo ammo;
-		if(normalAmmoPool.IsEmpty()) {
-			ammo = new NormalEnemyAmmo(_position);
-			ammo.poolIndex = normalAmmoPool.AddPool(ammo);
-		}
-		else {
-			ammo = normalAmmoPool.GetPool();
-			if(ammo.isActive)
-				Debug.Log("Ammo Is Already Active");
-		}
-		ammo.Reset(_position);
-		ammo.SetImage(ammoType);
-		
-		return ammo;
+	    NormalEnemyAmmo ammo = AcquireAmmo(_position);
+	    ammo.Reset(_position);
+	    ammo.SetImage(ammoType);
+	    return ammo;
+	}
+
+	private NormalEnemyAmmo AcquireAmmo(Vector2 _position) {
+	    if (normalAmmoPool.IsEmpty()) {
+	        NormalEnemyAmmo ammo = new NormalEnemyAmmo(_position);
+	        ammo.poolIndex = normalAmmoPool.AddPool(ammo);
+	        return ammo;
+	    }
+	    NormalEnemyAmmo ammo = normalAmmoPool.GetPool();
+	    if (ammo.isActive) {
+	        Debug.Log("Ammo Is Already Active");
+	    }
+	    return ammo;
 	}
 	public void ReturnAmmo(EnemyAmmo _ammo) {
 		if (_ammo instanceof NormalEnemyAmmo) {

@@ -51,6 +51,7 @@ public class GamePanel extends JPanel{
         for(int i = 0;i<objects.size();i++)
         	DrawObject(graphics2d, objects.get(i));
         	
+        drawUI(graphics2d);
     }
     
     @Override
@@ -71,6 +72,22 @@ public class GamePanel extends JPanel{
 	public void Update() {
 		repaint();
 	}
+	
+	private void drawUI(Graphics g) {
+        g.setColor(Color.WHITE); // 글자 색상을 검은색으로 설정
+        g.setFont(new Font("Arial", Font.BOLD, 20));
+
+        // 오른쪽 위에 현재 점수와 최고 점수 표시
+        g.drawString("Current Score: " + GameManager.instance.Stage.score, getWidth() - 200, 30);
+        g.drawString("High Score: " + GameManager.instance.Stage.highScore, getWidth() - 200, 60);
+        
+        // 왼쪽 아래에 생명 표시
+        g.drawString("Lives: " + GameManager.instance.Stage.lives, 10, getHeight() - 30);
+        
+        // 왼쪽 위에 적 처치 수 및 진행 시간 표시
+        g.drawString("Enemies Defeated: " + GameManager.instance.Stage.enemiesDefeated, 10, 30);
+        g.drawString("Time: " + GameManager.instance.Stage.startTime + "s", 10, 60);
+    }
 	
 	private void DrawObject(Graphics2D graphics, GameObject _object) {
 		if (_object == null || _object.transform == null) return; // null 체크

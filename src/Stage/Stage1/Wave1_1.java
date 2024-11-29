@@ -3,9 +3,7 @@ package Stage.Stage1;
 import Object.GameObject;
 import Object.CustomObject.TestObject;
 import Stage.Wave;
-import Util.Debug;
 import Util.Vector2;
-import Util.WaitUntil;
 
 public class Wave1_1 extends Wave{
 	GameObject origin;

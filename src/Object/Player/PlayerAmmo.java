@@ -1,5 +1,6 @@
 package Object.Player;
 
+import Game.GameManager;
 import Game.MainProgram;
 import Object.AmmoObject;
 import Object.GameObject;
@@ -43,6 +44,7 @@ public class PlayerAmmo extends AmmoObject{
 			Destroy();
 			PlayerAttack.instance.ReturnAmmo(this);
 			((Enemy)_collision).Damage(damage);
+			GameManager.instance.Audio.PlaySound(AudioType.EnemyHit, 0.7f);
 		}
 	}
 	
