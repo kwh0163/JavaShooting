@@ -29,7 +29,7 @@ public class GameManager {
 		
 		Stage = new StageManager(Vector2.Zero());
 		
-		Player = new Player(new Vector2(450, 250), characterNumber);
+		Player = new Player(new Vector2(400, 250), characterNumber);
 		
 		Score = new ScoreManager();
 	}
