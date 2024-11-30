@@ -32,6 +32,7 @@ public class AudioManager {
 		
 		bgmMap = new HashMap<BGMType, String>();
 		bgmMap.put(BGMType.Stage1, "Stage1-1BGM.wav");
+		bgmMap.put(BGMType.Stage1Boss, "Stage1Boss.wav");
 		
 		audioMap = new HashMap<AudioType, String>();
 		audioMap.put(AudioType.PlayerHit, "PlayerHit.wav");
@@ -48,6 +49,11 @@ public class AudioManager {
 	
 	public void PlayBGM(int stageNumber) {
 		try {
+			if(bgmClip.isRunning())
+				bgmClip.stop();
+			
+			bgmClip = AudioSystem.getClip();
+			
 			bgmClip.flush();         // 버퍼 초기화
 	        bgmClip.setFramePosition(0);  // 시작 프레임을 0으로 설정
 			 

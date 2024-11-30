@@ -9,6 +9,7 @@ import javax.imageio.ImageIO;
 import Game.MainProgram;
 import MonoBehavior.BoxCollider;
 import MonoBehavior.CircleCollider;
+import Object.Enemy.Enemy;
 import Util.Time;
 import Util.Vector2;
 
@@ -19,6 +20,7 @@ public class PlayerGuidanceAmmo extends PlayerAmmo{
 	private double guideTimeCounter = 0;
 	
 	private PlayerAttack origin;
+	public Enemy targetEnemy = null;
 	
 	public PlayerGuidanceAmmo(Vector2 _position, PlayerAttack _origin) {
 		super(_position);
@@ -58,10 +60,10 @@ public class PlayerGuidanceAmmo extends PlayerAmmo{
 	
 	private Vector2 GetGuideVelocity() {
 		Vector2 direction;
-		if(origin.targetEnemy == null || !origin.targetEnemy.isActive)
+		if(targetEnemy == null || !targetEnemy.isActive)
 			direction = rigidBody.velocity.GetNormalized();
 		else
-			direction = origin.targetEnemy.transform.GetPosition().Sub(transform.GetPosition());
+			direction = targetEnemy.transform.GetPosition().Sub(transform.GetPosition());
 		transform.Look(direction);
 		return direction.GetNormalized();
 	}

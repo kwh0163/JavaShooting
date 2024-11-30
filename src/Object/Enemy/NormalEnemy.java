@@ -8,6 +8,7 @@ import MonoBehavior.BoxCollider;
 import MonoBehavior.Collider;
 import MonoBehavior.RigidBody;
 import Object.Enemy.Attack.NormalAmmoEnemyAttack;
+import Util.Debug;
 import Util.Layer;
 import Util.NormalEnemySprite;
 import Util.Tag;
@@ -21,7 +22,8 @@ public class NormalEnemy extends Enemy{
 		ThreePie,
 		FivePie,
 		CircleToPlayer,
-		RandomCircle
+		RandomCircle,
+		RandomFour
 	}
 	
 	Collider collider;
@@ -36,6 +38,7 @@ public class NormalEnemy extends Enemy{
 	AttackType currentAttack = AttackType.None;
 	
 	public int poolIndex;
+	public int id = 0;
 	
 	public NormalEnemy(Vector2 _position, int _hp, boolean _isDropPower, NormalEnemySprite _spriteType) {
 		super(_position, _hp, _isDropPower);
@@ -120,12 +123,18 @@ public class NormalEnemy extends Enemy{
 				attack.CircleAttackToPlayer(speed, ammoCount);
 				attackTimeCounter = 0;
 			}
+			else if(currentAttack == AttackType.RandomFour) {
+				Vector2 newVector2 = new Vector2(MainProgram.random.nextDouble(), MainProgram.random.nextDouble()).GetNormalized();
+				attack.CircleAttack(newVector2, speed, 4);
+				attackTimeCounter = 0;
+			}
 		}
 		
 	}
 	@Override
 	public void OnDestroy() {
 		super.OnDestroy();
+		NoAttack();
 		GameManager.instance.Enemy.ReturnEnemy(this);
 		movement.OnDestroy();
 	}
@@ -136,6 +145,7 @@ public class NormalEnemy extends Enemy{
 	}
 	public void NoAttack() {
 		attackTimeCounter = 0;
+		ammoTimeCounter = 0;
 		currentAttack = AttackType.None;
 	}
 	public void PlayerStraightAttack(double _attackTime, int _speed) {
@@ -169,6 +179,12 @@ public class NormalEnemy extends Enemy{
 		attackTime = _attackTime;
 		attackTimeCounter = 0;
 		ammoCount = _ammoCount;
+	}
+	public void RandomFourAttack(double _attackTime, int _speed) {
+		currentAttack = AttackType.RandomFour;
+		speed = _speed;
+		attackTime = _attackTime;
+		attackTimeCounter = 0;
 	}
 	
 	public void SetSprite(NormalEnemySprite _SpriteType) {

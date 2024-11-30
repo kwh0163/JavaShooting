@@ -7,6 +7,7 @@ import Object.PowerUpObject;
 import Object.Enemy.*;
 import Object.Enemy.Attack.Ammo.EnemyAmmo;
 import Object.Enemy.Attack.Ammo.NormalEnemyAmmo;
+import Object.Enemy.Attack.Ammo.TracePlayerAmmo;
 import Util.*;
 
 public class EnemyManager extends GameObject{
@@ -14,6 +15,7 @@ public class EnemyManager extends GameObject{
 	
 	public Pool<NormalEnemyAmmo> normalAmmoPool;
 	public Pool<NormalEnemy> normalEnemyPool;
+	public Pool<TracePlayerAmmo> traceAmmoPool;
 	
 	public EnemyManager() {
 		super(Vector2.Zero());
@@ -21,6 +23,7 @@ public class EnemyManager extends GameObject{
 		sprite.isVisible = false;
 		
 		normalAmmoPool = new Pool<NormalEnemyAmmo>();
+		traceAmmoPool = new Pool<TracePlayerAmmo>();
 		normalEnemyPool = new Pool<NormalEnemy>();
 		
 		enemyList = new ArrayList<Enemy>();
@@ -40,6 +43,19 @@ public class EnemyManager extends GameObject{
 	    ammo.SetImage(ammoType);
 	    return ammo;
 	}
+	public TracePlayerAmmo GetTraceAmmo(Vector2 _position) {
+		TracePlayerAmmo ammo;
+	    if(traceAmmoPool.IsEmpty()) {
+	    	ammo = new TracePlayerAmmo(_position);
+	    	ammo.poolIndex = traceAmmoPool.AddPool(ammo);
+	    	return ammo;
+	    }
+	    else {
+	    	ammo = traceAmmoPool.GetPool();
+	    }
+	    ammo.Reset(_position);
+	    return ammo;
+	}
 
 	private NormalEnemyAmmo AcquireAmmo(Vector2 _position) {
 	    if (normalAmmoPool.IsEmpty()) {
@@ -56,6 +72,9 @@ public class EnemyManager extends GameObject{
 	public void ReturnAmmo(EnemyAmmo _ammo) {
 		if (_ammo instanceof NormalEnemyAmmo) {
 			normalAmmoPool.ReturnPool(_ammo.poolIndex);
+		}
+		else if(_ammo instanceof TracePlayerAmmo) {
+			traceAmmoPool.ReturnPool(_ammo.poolIndex);
 		}
 	}
 	

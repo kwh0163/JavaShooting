@@ -35,11 +35,10 @@ public class Stage1 extends Stage {
 			scheduler.schedule(()->{
 				NormalEnemy temp = GetNormalEnemy(new Vector2(850, 700), 1, false, NormalEnemySprite.Blue);
 				temp.movement.MoveQuadric(waveSpeed, new Vector2(-100, 200));
-				if(currentI < 15) {
-					temp.NoAttack();
-				}
-				else {
+				if(currentI % 2 == 0)
 					temp.PlayerStraightAttack(waveAttackSpeed, waveAmmoSpeed + MainProgram.GetRandom().nextInt(30) - 15);
+				else {
+					temp.NoAttack();
 				}
 			}, stageStartTime + scheduleTime, TimeUnit.MILLISECONDS);
 			
@@ -51,11 +50,10 @@ public class Stage1 extends Stage {
 			scheduler.schedule(()->{
 				NormalEnemy temp = GetNormalEnemy(new Vector2(-50, 700), 1, false, NormalEnemySprite.Blue);
 				temp.movement.MoveQuadric(waveSpeed, new Vector2(900, 200));
-				if(currentI < 15) {
-					temp.NoAttack();
-				}
-				else {
+				if(currentI % 2 == 0)
 					temp.PlayerStraightAttack(waveAttackSpeed, waveAmmoSpeed + MainProgram.GetRandom().nextInt(30) - 15);
+				else {
+					temp.NoAttack();
 				}
 			}, stageStartTime + scheduleTime, TimeUnit.MILLISECONDS);
 			scheduleTime += 300;
@@ -72,19 +70,18 @@ public class Stage1 extends Stage {
 		for(int i = 0; i < 15;i++) {
 			int currentI = i;
 			scheduler.schedule(()->{
-				NormalEnemy temp = GetNormalEnemy(new Vector2(-100, 200), 1, false, NormalEnemySprite.Blue);
+				NormalEnemy temp = GetNormalEnemy(new Vector2(-100, 200), 3, false, NormalEnemySprite.Blue);
 				temp.movement.MoveStraight(waveSpeed, new Vector2(900, 700));
-				if(currentI < 10) {
-					temp.NoAttack();
-				}
+				if(currentI % 3 == 0)
+					temp.PlayerThreePieAttack(waveAttackSpeed, waveAmmoSpeed, 1);
 				else {
-					temp.PlayerStraightAttack(waveAttackSpeed, waveAmmoSpeed + MainProgram.GetRandom().nextInt(30) - 15);
+					temp.NoAttack();
 				}
 			}, stageStartTime + scheduleTime, TimeUnit.MILLISECONDS);
 			scheduleTime += 300;
 		}
 		scheduler.schedule(()->{
-			NormalEnemy temp = GetNormalEnemy(new Vector2(-100, 200), 3, false, NormalEnemySprite.RedYellow);
+			NormalEnemy temp = GetNormalEnemy(new Vector2(-100, 200), 3, true, NormalEnemySprite.RedYellow);
 			temp.movement.MoveStraight(waveSpeed, new Vector2(900, 700));
 			temp.PlayerStraightAttack(waveAttackSpeed, waveAmmoSpeed + MainProgram.GetRandom().nextInt(30) - 15);
 		}, stageStartTime + scheduleTime, TimeUnit.MILLISECONDS);
@@ -92,37 +89,60 @@ public class Stage1 extends Stage {
 		for(int i = 0; i < 15;i++) {
 			int currentI = i;
 			scheduler.schedule(()->{
-				NormalEnemy temp = GetNormalEnemy(new Vector2(900, 200), 1, false, NormalEnemySprite.Blue);
+				NormalEnemy temp = GetNormalEnemy(new Vector2(900, 200), 3, false, NormalEnemySprite.Blue);
 				temp.movement.MoveStraight(waveSpeed, new Vector2(-100, 700));
-				if(currentI < 10) {
-					temp.NoAttack();
-				}
+				if(currentI % 3 == 0)
+					temp.PlayerThreePieAttack(waveAttackSpeed, waveAmmoSpeed, 1);
 				else {
-					temp.PlayerStraightAttack(waveAttackSpeed, waveAmmoSpeed + MainProgram.GetRandom().nextInt(30) - 15);
+					temp.NoAttack();
 				}
 			}, stageStartTime + scheduleTime, TimeUnit.MILLISECONDS);
 			scheduleTime += 300;
 		}
 		//wave2 End
-		int wave2Speed = 4;
 		scheduleTime += 2000;
+		//wave2.5
+		for(int i = 0; i < 30;i++) {
+			int currentI = i;
+			scheduler.schedule(()->{
+				NormalEnemy temp = GetNormalEnemy(new Vector2(750, 900), 7, false, NormalEnemySprite.Blue);
+				temp.movement.MoveCubic_75(8, new Vector2(50, -100));
+				if(currentI % 2 == 0)
+					temp.RandomFourAttack(4, waveAmmoSpeed);
+				else {
+					temp.NoAttack();
+				}
+				
+				temp = GetNormalEnemy(new Vector2(50, 900), 7, false, NormalEnemySprite.Blue);
+				temp.movement.MoveCubic_75(8, new Vector2(750, -100));
+				if(currentI % 2 == 0)
+					temp.RandomFourAttack(4, waveAmmoSpeed);
+				else {
+					temp.NoAttack();
+				}
+			}, stageStartTime + scheduleTime, TimeUnit.MILLISECONDS);
+			scheduleTime += 300;
+		}
+		//wave2.5 End
+		scheduleTime += 6000;
 		//wave3
+		int wave2Speed = 4;
 		for(int i = 0;i<40;i++) {
 			int currentI = i;
 			scheduler.schedule(()->{
-				NormalEnemy temp = GetNormalEnemy(new Vector2(450, 700), 3, false, NormalEnemySprite.Blue);
+				NormalEnemy temp = GetNormalEnemy(new Vector2(450, 700), 7, false, NormalEnemySprite.Blue);
 				temp.movement.MoveQuadric(wave2Speed, new Vector2(-100, 200));
 				if(currentI % 5 == 0) {
-					temp.PlayerCircleAttack(1.5, waveAmmoSpeed+MainProgram.GetRandom().nextInt(30) - 15, 8);
+					temp.PlayerCircleAttack(1.5 + ((currentI % 2 == 0) ? 0.2 : -0.2), 200+MainProgram.GetRandom().nextInt(30) - 15, 8);
 				}
 				else {
 					temp.NoAttack();
 				}
 				
-				temp = GetNormalEnemy(new Vector2(450, 700), 3, false, NormalEnemySprite.Blue);
+				temp = GetNormalEnemy(new Vector2(450, 700), 7, false, NormalEnemySprite.Blue);
 				temp.movement.MoveQuadric(wave2Speed, new Vector2(900, 200));
 				if(currentI % 5 == 0) {
-					temp.PlayerCircleAttack(1.5, waveAmmoSpeed+MainProgram.GetRandom().nextInt(30) - 15, 8);
+					temp.PlayerCircleAttack(1.5 + ((currentI % 2 == 0) ? 0.2 : -0.2), 200+MainProgram.GetRandom().nextInt(30) - 15, 8);
 				}
 				else {
 					temp.NoAttack();
@@ -134,11 +154,13 @@ public class Stage1 extends Stage {
 		scheduleTime += 2000;
 		//Wave4
 		scheduler.schedule(() -> {
-			NormalEnemy temp = GetNormalEnemy(new Vector2(600, 700), 25, false, NormalEnemySprite.RedYellow);
+			NormalEnemy temp = GetNormalEnemy(new Vector2(600, 700), 40, false, NormalEnemySprite.RedYellow);
 			temp.movement.MoveStraight(6, new Vector2(600, 300));
+			temp.id = 0;
 			scheduler.schedule(() ->{
-				if(temp.isActive) {
+				if(temp.id == 0 && temp.isActive) {
 					temp.movement.StopMove();
+					temp.NoAttack();
 					temp.PlayerFivePieAttack(10, 300, 10);
 					temp.AttackNow();
 					scheduler.schedule(() -> {
@@ -147,16 +169,17 @@ public class Stage1 extends Stage {
 					}, 3000, TimeUnit.MILLISECONDS);
 				}
 			}, 3000, TimeUnit.MILLISECONDS);
-			temp.PlayerStraightAttack(waveAttackSpeed, waveAmmoSpeed);
 			
 		}, stageStartTime + scheduleTime, TimeUnit.MILLISECONDS);
 		scheduleTime += 2000;
 		scheduler.schedule(() -> {
-			NormalEnemy temp = GetNormalEnemy(new Vector2(300, 700), 25, true, NormalEnemySprite.RedYellow);
+			NormalEnemy temp = GetNormalEnemy(new Vector2(300, 700), 40, true, NormalEnemySprite.RedYellow);
+			temp.id = 1;
 			temp.movement.MoveStraight(6, new Vector2(300, 300));
 			scheduler.schedule(() ->{
-				if(temp.isActive) {
+				if(temp.id == 2 && temp.isActive) {
 					temp.movement.StopMove();
+					temp.NoAttack();
 					temp.PlayerFivePieAttack(10, 300, 10);
 					temp.AttackNow();
 					scheduler.schedule(() -> {
@@ -165,12 +188,11 @@ public class Stage1 extends Stage {
 					}, 3000, TimeUnit.MILLISECONDS);
 				}
 			}, 3000, TimeUnit.MILLISECONDS);
-			temp.PlayerStraightAttack(waveAttackSpeed, waveAmmoSpeed);
 			
 		}, stageStartTime + scheduleTime, TimeUnit.MILLISECONDS);
 		scheduleTime += 5000;
 		scheduler.schedule(() -> {
-			NormalEnemy temp = GetNormalEnemy(new Vector2(100, 700), 40, false, NormalEnemySprite.RedYellow);
+			NormalEnemy temp = GetNormalEnemy(new Vector2(100, 700), 80, false, NormalEnemySprite.RedYellow);
 			temp.movement.MoveStraight(6, new Vector2(100, 300));
 			scheduler.schedule(() ->{
 				if(temp.isActive) {
@@ -188,12 +210,11 @@ public class Stage1 extends Stage {
 					}, 4000, TimeUnit.MILLISECONDS);
 				}
 			}, 3000, TimeUnit.MILLISECONDS);
-			temp.PlayerStraightAttack(waveAttackSpeed, waveAmmoSpeed);
 			
 		}, stageStartTime + scheduleTime, TimeUnit.MILLISECONDS);
 		scheduleTime += 1000;
 		scheduler.schedule(() -> {
-			NormalEnemy temp = GetNormalEnemy(new Vector2(300, 700), 40, false, NormalEnemySprite.RedYellow);
+			NormalEnemy temp = GetNormalEnemy(new Vector2(300, 700), 80, false, NormalEnemySprite.RedYellow);
 			temp.movement.MoveStraight(6, new Vector2(300, 300));
 			scheduler.schedule(() ->{
 				if(temp.isActive) {
@@ -211,12 +232,11 @@ public class Stage1 extends Stage {
 					}, 4000, TimeUnit.MILLISECONDS);
 				}
 			}, 3000, TimeUnit.MILLISECONDS);
-			temp.PlayerStraightAttack(waveAttackSpeed, waveAmmoSpeed);
 			
 		}, stageStartTime + scheduleTime, TimeUnit.MILLISECONDS);
 		scheduleTime += 1000;
 		scheduler.schedule(() -> {
-			NormalEnemy temp = GetNormalEnemy(new Vector2(500, 700), 40, false, NormalEnemySprite.RedYellow);
+			NormalEnemy temp = GetNormalEnemy(new Vector2(500, 700), 80, false, NormalEnemySprite.RedYellow);
 			temp.movement.MoveStraight(6, new Vector2(500, 300));
 			scheduler.schedule(() ->{
 				if(temp.isActive) {
@@ -234,12 +254,11 @@ public class Stage1 extends Stage {
 					}, 4000, TimeUnit.MILLISECONDS);
 				}
 			}, 3000, TimeUnit.MILLISECONDS);
-			temp.PlayerStraightAttack(waveAttackSpeed, waveAmmoSpeed);
 			
 		}, stageStartTime + scheduleTime, TimeUnit.MILLISECONDS);
 		scheduleTime += 1000;
 		scheduler.schedule(() -> {
-			NormalEnemy temp = GetNormalEnemy(new Vector2(700, 700), 40, false, NormalEnemySprite.RedYellow);
+			NormalEnemy temp = GetNormalEnemy(new Vector2(700, 700), 80, false, NormalEnemySprite.RedYellow);
 			temp.movement.MoveStraight(6, new Vector2(700, 300));
 			scheduler.schedule(() ->{
 				if(temp.isActive) {
@@ -257,12 +276,13 @@ public class Stage1 extends Stage {
 					}, 4000, TimeUnit.MILLISECONDS);
 				}
 			}, 3000, TimeUnit.MILLISECONDS);
-			temp.PlayerStraightAttack(waveAttackSpeed, waveAmmoSpeed);
 			
 		}, stageStartTime + scheduleTime, TimeUnit.MILLISECONDS);
 		//Wave4 End
-		scheduleTime += 5000;
-		new Boss1();
+		scheduleTime += 10000;
+		scheduler.schedule(() -> {
+			new Boss1();
+		}, stageStartTime + scheduleTime, TimeUnit.MILLISECONDS);
 		
 	}
 }

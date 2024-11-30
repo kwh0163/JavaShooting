@@ -66,12 +66,13 @@ public class NormalEnemyMovement extends MonoBehavior{
 				newPosition.y = 1 - newPosition.y;
 		}
 		else if(currentMoveType == MoveType.Cubic75) {
-			double xValue = isReverseX ? (1 - value) : value;
-			newPosition.x = CustomMath.Lerp(defaultPosition.x, targetPosition.x, xValue);
+			newPosition.x = CustomMath.Lerp(defaultPosition.x, targetPosition.x, value);
+			if(isReverseX)
+				value = 1 - value;
 			double yValue = CustomMath.CubicFunc75(value);
-			newPosition.y = CustomMath.Lerp(defaultPosition.y, targetPosition.y, yValue);
 			if(isReverseY)
-				newPosition.y = 1 - newPosition.y;
+				yValue = 1 - yValue;
+			newPosition.y = CustomMath.Lerp(defaultPosition.y, targetPosition.y, 1 - yValue);
 		}
 		else if(currentMoveType == MoveType.Straight) {
 			newPosition = Vector2.Lerp(value, defaultPosition, targetPosition);

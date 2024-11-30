@@ -6,7 +6,7 @@ import Util.Debug;
 import Util.Vector2;
 
 public class Enemy extends GameObject{
-	 EnemyHealth health;
+	public EnemyHealth health;
 	
 	
 	public boolean isDropPower = false;

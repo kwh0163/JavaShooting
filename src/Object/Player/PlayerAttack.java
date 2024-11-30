@@ -95,6 +95,7 @@ public abstract class PlayerAttack extends MonoBehavior {
 			ammo = guidancePool.GetPool();
 		}
 		ammo.Reset(_position, _degree);
+		ammo.targetEnemy = targetEnemy;
 	}
 	
 	public void ReturnAmmo(PlayerAmmo _ammo) {

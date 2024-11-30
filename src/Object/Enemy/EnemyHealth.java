@@ -11,6 +11,8 @@ public class EnemyHealth extends MonoBehavior {
 	private Enemy origin;
 	
 	public int hp;
+	public boolean isBeatable = true;
+	public boolean isBoss = false;
 	
 	public EnemyHealth(Enemy _origin, int _hp) {
 		super(_origin);
@@ -19,6 +21,8 @@ public class EnemyHealth extends MonoBehavior {
 	}
 	
 	public void Damage(int _damage) {
+		if(!isBeatable)
+			return;
 		hp -= _damage;
 		if(DEBUG_MODE) {
 			Debug.Log(String.format("%s got %d damages.", origin.name, _damage));
@@ -36,7 +40,10 @@ public class EnemyHealth extends MonoBehavior {
 		GameManager.instance.Score.score += origin.killScore;
 		if(origin.isDropPower)
 			GameManager.instance.GetPowerUp(origin.transform.GetPosition());
-		GameManager.instance.Audio.PlaySound(AudioType.NormalEnemyDie, 0.85f);
+		if(isBoss)
+			GameManager.instance.Audio.PlaySound(AudioType.BossDie, 0.85f);
+		else
+			GameManager.instance.Audio.PlaySound(AudioType.NormalEnemyDie, 0.85f);
 		origin.OnDestroy();
 	}
 }
