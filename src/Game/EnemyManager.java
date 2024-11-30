@@ -13,6 +13,7 @@ public class EnemyManager extends GameObject{
 	public ArrayList<Enemy> enemyList;
 	
 	public Pool<NormalEnemyAmmo> normalAmmoPool;
+	public Pool<NormalEnemy> normalEnemyPool;
 	
 	public EnemyManager() {
 		super(Vector2.Zero());
@@ -20,6 +21,7 @@ public class EnemyManager extends GameObject{
 		sprite.isVisible = false;
 		
 		normalAmmoPool = new Pool<NormalEnemyAmmo>();
+		normalEnemyPool = new Pool<NormalEnemy>();
 		
 		enemyList = new ArrayList<Enemy>();
 	}
@@ -56,4 +58,21 @@ public class EnemyManager extends GameObject{
 			normalAmmoPool.ReturnPool(_ammo.poolIndex);
 		}
 	}
+	
+	public NormalEnemy GetEnemy(Vector2 _position, int _hp, boolean _isDropPower, NormalEnemySprite _sprite) {
+		NormalEnemy enemy;
+		if(normalEnemyPool.IsEmpty()) {
+			enemy = new NormalEnemy(_position, _hp, _isDropPower, _sprite);
+			enemy.poolIndex = normalEnemyPool.AddPool(enemy);
+		}
+		else {
+			enemy = normalEnemyPool.GetPool();
+		}
+		enemy.NormalReset(_position, _hp, _isDropPower, _sprite);
+		return enemy;
+	}
+	public void ReturnEnemy(NormalEnemy _enemy) {
+		normalEnemyPool.ReturnPool(_enemy.poolIndex);
+	}
+	
 }

@@ -1,62 +1,22 @@
 package Stage;
 
 
-import java.util.ArrayList;
 
+import Game.GameManager;
 import MonoBehavior.MonoBehavior;
 import Object.GameObject;
-import Util.Debug;
-import Util.Time;
+import Object.Enemy.NormalEnemy;
+import Util.NormalEnemySprite;
+import Util.Vector2;
 
 public class Stage extends MonoBehavior{
 	static final boolean DEBUG_MODE = false;
-	int currentWave = 0;
 	
-	boolean isStageStarted = false;
-	double stageStartCounter = 0;
-	double stageStartTime = 3;
-	
-	
-	boolean isStageCleared = false;
-	ArrayList<Wave> waveList = new ArrayList<Wave>();
 	public Stage(GameObject _object) {
 		super(_object);
 	}
-
-	public void AddWave(Wave _wave) {
-		waveList.add(_wave);
-	}
 	
-	@Override
-	public void Update() {
-		if(isStageCleared)
-			return;
-		
-		if(!isStageStarted) {
-			if(stageStartCounter < stageStartTime) {
-				stageStartCounter += Time.DeltaTime();
-				return;
-			}
-			else {
-				isStageStarted = true;
-				waveList.get(currentWave).StartWave();
-			}
-		}
-		
-		if(CheckCurrentStageCleared()) {
-			waveList.set(currentWave, null);
-			currentWave++;
-			if(currentWave < waveList.size()) {
-				waveList.get(currentWave).StartWave();
-			}
-			else {
-				isStageCleared = true;
-				if(DEBUG_MODE)
-					Debug.Log("Stage Cleared");
-			}
-		}
-	}
-	boolean CheckCurrentStageCleared() {
-		return waveList.get(currentWave).IsWaveEnd();
+	protected NormalEnemy GetNormalEnemy(Vector2 _position, int _hp, boolean _isDropPower, NormalEnemySprite _sprite) {
+		return GameManager.instance.Enemy.GetEnemy(_position, _hp, _isDropPower, _sprite);
 	}
 }

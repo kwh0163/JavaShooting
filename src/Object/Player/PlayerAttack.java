@@ -15,7 +15,7 @@ public abstract class PlayerAttack extends MonoBehavior {
 	public static PlayerAttack instance;
 	
 	protected Player origin;
-	public int level = 3;
+	public int level = 1;
 	public boolean isAttacking = false;
 	
 	protected float attackVolume = 0.7f;

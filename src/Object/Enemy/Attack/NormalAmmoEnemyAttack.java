@@ -21,14 +21,17 @@ public class NormalAmmoEnemyAttack{
 	}
 	
 	public void PlayerTargettingAttack(float _speed) {
+		PlayAttackSound();
 		Vector2 direction = origin.GetDirectionToPlayer();
 		GetAmmo(NormalAmmoEnum.Red).SetVelocity(direction.Mul(_speed), true);
 	}
 	public void StraightAttack(Vector2 _direction, float _speed) {
+		PlayAttackSound();
 		GetAmmo(NormalAmmoEnum.Red).SetVelocity(_direction.Mul(_speed), true);
 	}
 	
 	public void PieAttack(Vector2 _direction, int speed, int count, int degree) {
+		PlayAttackSound();
 		Vector2 direction1 = Vector2.Zero();
 		Vector2 direction2 = Vector2.Zero();
 		if(count % 2 == 0) {
@@ -55,6 +58,7 @@ public class NormalAmmoEnemyAttack{
 	}
 	
 	public void CircleAttack(Vector2 _direction,int speed ,int count) {
+		PlayAttackSound();
 		float degree = 360 / count;
 		for(int i = 0;i<count;i++) {
 			StraightAttack(_direction.rotate(degree * i), speed);

@@ -10,7 +10,7 @@ public class EnemyHealth extends MonoBehavior {
 	
 	private Enemy origin;
 	
-	private int hp;
+	public int hp;
 	
 	public EnemyHealth(Enemy _origin, int _hp) {
 		super(_origin);

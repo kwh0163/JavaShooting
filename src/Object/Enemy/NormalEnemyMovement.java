@@ -7,7 +7,7 @@ import Util.Debug;
 import Util.Time;
 import Util.Vector2;
 
-public class EnemyMovement extends MonoBehavior{
+public class NormalEnemyMovement extends MonoBehavior{
 	
 	enum MoveType{
 		None,
@@ -23,11 +23,16 @@ public class EnemyMovement extends MonoBehavior{
 	double moveTime = 0;
 	Vector2 defaultPosition = Vector2.Zero();
 	Vector2 targetPosition = Vector2.Zero();
-	boolean isReverse = false;
+	boolean isReverseX = false;
+	boolean isReverseY = false;
 	
-	public EnemyMovement(GameObject _object) {
+	public NormalEnemyMovement(GameObject _object) {
 		super(_object);
 		origin = (Enemy)_object;
+	}
+	
+	public void OnDestroy() {
+		currentMoveType = MoveType.None;
 	}
 	
 	@Override
@@ -49,38 +54,37 @@ public class EnemyMovement extends MonoBehavior{
 			}
 		}
 		double value = moveTimeCounter / moveTime;
+		Vector2 newPosition = Vector2.Zero();
 		
 		if(currentMoveType == MoveType.Cubic6) {
-			double x = CustomMath.Lerp(defaultPosition.x, targetPosition.x, value);
+			double xValue = isReverseX ? (1 - value) : value;
+			
+			newPosition.x = CustomMath.Lerp(defaultPosition.x, targetPosition.x, xValue);
 			double yValue = CustomMath.CubicFunc6(value);
-			if(isReverse)
-				yValue = 1- yValue;
-			double y = CustomMath.Lerp(defaultPosition.y, targetPosition.y, yValue);
-			origin.transform.SetPosition(new Vector2(x, y));
-			return;
+			newPosition.y = CustomMath.Lerp(defaultPosition.y, targetPosition.y, yValue);
+			if(isReverseY)
+				newPosition.y = 1 - newPosition.y;
 		}
 		else if(currentMoveType == MoveType.Cubic75) {
-			double x = CustomMath.Lerp(defaultPosition.x, targetPosition.x, value);
+			double xValue = isReverseX ? (1 - value) : value;
+			newPosition.x = CustomMath.Lerp(defaultPosition.x, targetPosition.x, xValue);
 			double yValue = CustomMath.CubicFunc75(value);
-			if(isReverse)
-				yValue = 1- yValue;
-			double y = CustomMath.Lerp(defaultPosition.y, targetPosition.y, yValue);
-			origin.transform.SetPosition(new Vector2(x, y));
-			return;
+			newPosition.y = CustomMath.Lerp(defaultPosition.y, targetPosition.y, yValue);
+			if(isReverseY)
+				newPosition.y = 1 - newPosition.y;
 		}
 		else if(currentMoveType == MoveType.Straight) {
-			origin.transform.SetPosition(Vector2.Lerp(value, defaultPosition, targetPosition));
-			return;
+			newPosition = Vector2.Lerp(value, defaultPosition, targetPosition);
 		}
 		else if(currentMoveType == MoveType.Quadric) {
-			double x = CustomMath.Lerp(defaultPosition.x, targetPosition.x, value);
-			double yValue = value * value;
-			if(isReverse)
-				yValue = 1 - yValue;
-			double y = CustomMath.Lerp(defaultPosition.y, targetPosition.y, value);
-			origin.transform.SetPosition(new Vector2(x, y));
-			return;
+			newPosition.x = CustomMath.Lerp(defaultPosition.x, targetPosition.x, value);
+			if(isReverseX)
+				value = 1 - value;
+			double yValue = isReverseY ? ((value - 1) * (value - 1)) : value * value;
+			newPosition.y = CustomMath.Lerp(defaultPosition.y, targetPosition.y, 1 - yValue);
 		}
+		
+		origin.transform.SetPosition(newPosition);
 	}
 	
 	public void Move(double _moveTime, Vector2 _targetPosition, MoveType _moveType) {
@@ -129,7 +133,8 @@ public class EnemyMovement extends MonoBehavior{
 		moveTime = _movetime;
 		defaultPosition = origin.transform.GetPosition();
 		targetPosition = _targetPosition;
-		isReverse = defaultPosition.x < targetPosition.x;
+		isReverseX = defaultPosition.x > targetPosition.x;
+ 		isReverseY = ((isReverseX && defaultPosition.y < targetPosition.y) || (!isReverseX && defaultPosition.y > targetPosition.y));
 	}
 
 }
