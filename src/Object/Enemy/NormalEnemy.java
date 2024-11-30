@@ -3,6 +3,7 @@ package Object.Enemy;
 import java.awt.image.BufferedImage;
 
 import Game.GameManager;
+import Game.MainProgram;
 import MonoBehavior.BoxCollider;
 import MonoBehavior.Collider;
 import MonoBehavior.RigidBody;
@@ -18,6 +19,7 @@ public class NormalEnemy extends Enemy{
 		None,
 		PlayerStraight,
 		ThreePie,
+		FivePie,
 		CircleToPlayer,
 		RandomCircle
 	}
@@ -91,7 +93,7 @@ public class NormalEnemy extends Enemy{
 				attack.PlayerTargettingAttack(speed);
 				attackTimeCounter = 0;
 			}
-			else if(currentAttack == AttackType.ThreePie) {
+			else if(currentAttack == AttackType.ThreePie || currentAttack == AttackType.FivePie) {
 				if(counter < ammoCount) {
 					if(ammoTimeCounter < 0.2)
 					{
@@ -99,7 +101,12 @@ public class NormalEnemy extends Enemy{
 					}
 					else {
 						ammoTimeCounter = 0;
-						attack.PieAttackToPlayer(speed, 3, 30);
+						if(currentAttack == AttackType.ThreePie) {
+							attack.PieAttackToPlayer(speed + MainProgram.GetRandom().nextInt(speed / 10) - speed / 20, 3, 30);
+						}
+						else if(currentAttack == AttackType.FivePie) {
+							attack.PieAttackToPlayer(speed + MainProgram.GetRandom().nextInt(speed / 10) - speed / 20, 5, 40);
+						}
 						counter++;
 					}
 				}
@@ -123,7 +130,12 @@ public class NormalEnemy extends Enemy{
 		movement.OnDestroy();
 	}
 	
+	public void AttackNow() {
+		attackTimeCounter = 99999;
+		ammoTimeCounter = 99999;
+	}
 	public void NoAttack() {
+		attackTimeCounter = 0;
 		currentAttack = AttackType.None;
 	}
 	public void PlayerStraightAttack(double _attackTime, int _speed) {
@@ -133,13 +145,22 @@ public class NormalEnemy extends Enemy{
 		
 		currentAttack = AttackType.PlayerStraight;
 	}
-	public void PlayerPieAttack(double _attackTime, int _speed, int _ammoCount) {
+	public void PlayerThreePieAttack(double _attackTime, int _speed, int _ammoCount) {
 		currentAttack = AttackType.ThreePie;
 		speed = _speed;
 		attackTime = _attackTime;
 		attackTimeCounter = 0;
 		ammoTimeCounter = 10;
-		counter = 10;
+		counter = 0;
+		ammoCount = _ammoCount;
+	}
+	public void PlayerFivePieAttack(double _attackTime, int _speed, int _ammoCount) {
+		currentAttack = AttackType.FivePie;
+		speed = _speed;
+		attackTime = _attackTime;
+		attackTimeCounter = 0;
+		ammoTimeCounter = 10;
+		counter = 0;
 		ammoCount = _ammoCount;
 	}
 	public void PlayerCircleAttack(double _attackTime, int _speed, int _ammoCount) {

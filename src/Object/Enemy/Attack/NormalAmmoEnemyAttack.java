@@ -50,7 +50,6 @@ public class NormalAmmoEnemyAttack{
 			direction2 = direction2.rotate(-degree);
 		}
 	}
-	
 	public void PieAttackToPlayer(int speed, int count, int degree) {
 		Vector2 direction = origin.GetDirectionToPlayer();
 

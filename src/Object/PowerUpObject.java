@@ -60,6 +60,7 @@ public class PowerUpObject extends GameObject{
 	}
 	
 	public void Reset(Vector2 position) {
+		isActive = true;
 		transform.SetPosition(position);
 		rigidBody.velocity = Vector2.Down().Mul(speed);
 		disappearTimeCounter = 0;

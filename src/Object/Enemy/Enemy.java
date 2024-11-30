@@ -28,6 +28,7 @@ public class Enemy extends GameObject{
 		health.Damage(_damage);
 	}
 	public void Reset(Vector2 _position, int hp, boolean _isDropPower) {
+		GameManager.instance.Enemy.AddEnemy(this);
 		transform.SetPosition(_position);
 		health.hp = hp;
 		isDropPower = _isDropPower;

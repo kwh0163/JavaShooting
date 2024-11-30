@@ -91,13 +91,13 @@ public abstract class PlayerAttack extends MonoBehavior {
 		}
 		else {
 			ammo = guidancePool.GetPool();
-			if(ammo.isActive)
-				Debug.Log("Ammo Is Already Active");
 		}
 		ammo.Reset(_position, _degree);
 	}
 	
 	public void ReturnAmmo(PlayerAmmo _ammo) {
+		if(_ammo.isActive)
+			Debug.Log("Ammo is active");
 		if (_ammo instanceof PlayerStraightAmmo) {
 			straightPool.ReturnPool(_ammo.poolIndex);
 		}

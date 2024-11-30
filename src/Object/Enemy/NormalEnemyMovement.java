@@ -86,6 +86,11 @@ public class NormalEnemyMovement extends MonoBehavior{
 		
 		origin.transform.SetPosition(newPosition);
 	}
+	public void StopMove() {
+		if(CheckIsMoving()) {
+			currentMoveType = MoveType.None;
+		}
+	}
 	
 	public void Move(double _moveTime, Vector2 _targetPosition, MoveType _moveType) {
 		if(CheckIsMoving())
