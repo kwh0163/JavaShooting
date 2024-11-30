@@ -1,36 +1,33 @@
 package Test;
 
 import javax.swing.*;
+
+import Game.MainProgram;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-public class COPY extends JFrame {
+public class COPY{
     private CardLayout cardLayout; // 화면 전환을 위한 CardLayout
     private JPanel cardPanel; // 여러 화면을 담을 패널
 
     public COPY() {
-        // JFrame 기본 설정
-        setTitle("Shooting");
-        setSize(800, 600);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLocationRelativeTo(null);
 
         // CardLayout과 cardPanel 초기화
         cardLayout = new CardLayout();
         cardPanel = new JPanel(cardLayout);
 
         // 메인 화면과 선택 화면 추가
+        cardPanel.setPreferredSize(new Dimension(800, 600));
         cardPanel.add(createMainPanel(), "MainPanel");
         cardPanel.add(createChoicePanel(), "ChoicePanel");
-
-        // JFrame에 cardPanel 추가
-        add(cardPanel);
-
-        // JFrame 표시
-        setVisible(true);
+    }
+    
+    public JPanel GetPanel() {
+    	return cardPanel;
     }
 
     // 메인 화면 생성
@@ -100,8 +97,8 @@ public class COPY extends JFrame {
         option1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(choicePanel, "Plane 1");
-                cardLayout.show(cardPanel, "MainPanel"); // 메인 화면으로 돌아감
+            	MainProgram.PlayerInt = 0;
+            	MainProgram.StartGame();
             }
         });
 
@@ -113,8 +110,8 @@ public class COPY extends JFrame {
         option2.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(choicePanel, "Plane 2");
-                cardLayout.show(cardPanel, "MainPanel"); // 메인 화면으로 돌아감
+            	MainProgram.PlayerInt = 1;
+            	MainProgram.StartGame();
             }
         });
 
@@ -126,8 +123,8 @@ public class COPY extends JFrame {
         option3.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(choicePanel, "Plane 3");
-                cardLayout.show(cardPanel, "MainPanel"); // 메인 화면으로 돌아감
+            	MainProgram.PlayerInt = 2;
+            	MainProgram.StartGame();
             }
         });
 

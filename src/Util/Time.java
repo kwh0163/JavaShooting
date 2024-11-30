@@ -17,7 +17,6 @@ public class Time {
 	}
 	
 	public static void StartProgram(GameObjectManager _objectManager, GamePanel _panel) {
-		_panel.Start();
 		
 		long a = System.currentTimeMillis();
 		long b = System.currentTimeMillis();

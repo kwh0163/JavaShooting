@@ -44,6 +44,7 @@ public class GamePanel extends JPanel{
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         
+        
         Graphics2D graphics2d = (Graphics2D)g;
         if(originalComposite == null)
         	originalComposite = graphics2d.getComposite();
@@ -58,17 +59,6 @@ public class GamePanel extends JPanel{
     public Dimension getPreferredSize() {
         return new Dimension(MainProgram.width, MainProgram.height); // 원하는 패널 크기 반환
     }
-    
-    public void Start() {
-    	JFrame frame = new JFrame(MainProgram.title);
-        
-        frame.setSize(MainProgram.width, MainProgram.height);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.add(this);
-        frame.pack();
-        frame.setVisible(true);
-    }
-    
 	public void Update() {
 		repaint();
 	}
