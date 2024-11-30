@@ -67,6 +67,8 @@ public abstract class PlayerAttack extends MonoBehavior {
 	}
 	
 	public void Attack() {
+		if(!origin.health.isHitable)
+			return;
 		FirstAmmo();
 		SecondAmmo();
 	}

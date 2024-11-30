@@ -11,7 +11,7 @@ public class PlayerHealth extends MonoBehavior {
 	public int hp;
 	public boolean isHitable = true;
 	private float hitCounter = 0;
-	private float unbeatableTime = 5;
+	private float unbeatableTime = 3;
 	private float hitInterver = 1;
 	
 	public PlayerHealth(Player _origin, int _hp) {

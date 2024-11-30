@@ -77,9 +77,8 @@ public class GamePanel extends JPanel{
         g.setColor(Color.WHITE); // 글자 색상을 검은색으로 설정
         g.setFont(new Font("Arial", Font.BOLD, 20));
 
-        // 오른쪽 위에 현재 점수와 최고 점수 표시
+        // 오른쪽 위에 현재 점수 표시
         g.drawString("Current Score: " + GameManager.instance.Stage.score, getWidth() - 200, 30);
-        g.drawString("High Score: " + GameManager.instance.Stage.highScore, getWidth() - 200, 60);
         
         // 왼쪽 아래에 생명 표시
         g.drawString("Lives: " + GameManager.instance.Stage.lives, 10, getHeight() - 30);
