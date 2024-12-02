@@ -67,7 +67,6 @@ public class Boss1 extends Enemy{
 		super.Update();
 		
 		timeCounter += Time.DeltaTime();
-		Debug.Log(String.format("bossTimeCounter : %f", timeCounter));
 		if(currentPattern == BossPattern.Start) {
 			if(timeCounter < 3) {
 				transform.SetPosition(Vector2.Lerp(timeCounter / 3, new Vector2(400, 800), new Vector2(400, 400)));

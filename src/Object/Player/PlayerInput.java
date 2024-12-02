@@ -1,7 +1,6 @@
 package Object.Player;
 
 import Util.*;
-import Object.CustomObject.*;
 
 public class PlayerInput{
 	public static PlayerInput instance;
